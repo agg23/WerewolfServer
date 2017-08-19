@@ -2,7 +2,6 @@
 
 extension Droplet {
     public func setup() throws {
-        try setupRoutes()
-        // Do any additional droplet setup
+        WebController.instance.registerRoutes(to: self)
     }
 }
