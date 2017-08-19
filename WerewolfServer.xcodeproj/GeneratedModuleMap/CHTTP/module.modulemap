@@ -1,0 +1,4 @@
+module CHTTP {
+    umbrella "/Users/adam/Desktop/AppCannon Software/Clients/Open Source/Werewolf Server/WerewolfServer/.build/checkouts/engine.git-3311994267206676365/Sources/CHTTP/include"
+    export *
+}
