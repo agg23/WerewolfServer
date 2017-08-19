@@ -2,9 +2,16 @@ import Vapor
 
 extension Droplet {
     func setupRoutes() throws {
+        let gameInfoController = GameInfoController()
+        get("availableCharacters", handler: gameInfoController.availableCharacters)
+
+        let socketController = SocketController()
+        socket("socket", handler: socketController.socketHandler)
+
         get("hello") { req in
             var json = JSON()
-            try json.set("hello", "world")
+            json["hello"] = "world"
+//            try json.set("hello", "world")
             return json
         }
 
@@ -19,7 +26,7 @@ extension Droplet {
         }
 
         get("description") { req in return req.description }
-        
+
         try resource("posts", PostController.self)
     }
 }
