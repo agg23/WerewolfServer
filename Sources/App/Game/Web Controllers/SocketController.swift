@@ -20,15 +20,19 @@ class SocketController {
             try self.socketResponse(socket: socket, text: text, user: user)
         }
 
-        sendStatus(.success, task: "connect", socket: socket)
+        sendStatus(.success, task: "connect", data: nil, socket: socket)
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
         print("Received message \(text)")
 
         let json = try JSON(bytes: Array(text.utf8))
-        let status: MessageStatus = parse(json: json, socket: socket, user: user) ? .success : .failure
-        sendStatus(status, task: json["command"]?.string, socket: socket)
+        do {
+            let data = try parse(json: json, socket: socket, user: user)
+            sendStatus(.success, task: json["command"]?.string, data: data, socket: socket)
+        } catch ParseError.missingData {
+            sendStatus(.failure, task: json["command"]?.string, data: nil, socket: socket)
+        }
     }
 
     func send(_ json: JSON, socket: WebSocket) {
@@ -41,7 +45,7 @@ class SocketController {
         }
     }
 
-    func parse(json: JSON, socket: WebSocket, user: User) -> Bool {
+    func parse(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let command = json["command"]?.string else {
             return false
         }
@@ -53,7 +57,7 @@ class SocketController {
 
         // Game
         case "hostGame":
-            return hostGame(json: json, socket: socket, user: user)
+            return try hostGame(json: json, socket: socket, user: user)
         default:
             return false
         }
@@ -62,12 +66,16 @@ class SocketController {
 
 // MARK: - JSON Messages
 extension SocketController {
+    enum ParseError: Error {
+        case missingData
+    }
+
     enum MessageStatus: String {
         case success = "success"
         case failure = "failure"
     }
 
-    func sendStatus(_ status: MessageStatus, task: String?, socket: WebSocket) {
+    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, socket: WebSocket) {
         var json = JSON()
         json["command"] = "response"
 
@@ -81,33 +89,39 @@ extension SocketController {
 
         json["task"] = taskJson
         json["status"] = JSON(status.rawValue)
+        if let data = data {
+            json["data"] = data
+        }
         send(json, socket: socket)
     }
 
     // MARK: - User Functions
 
-    func setNickname(json: JSON, socket: WebSocket, user: User) -> Bool {
+    func setNickname(json: JSON, socket: WebSocket, user: User) -> JSON? {
         let nickname = json["nickname"]?.string
         user.nickname = nickname
 
-        return true
+        return nil
     }
 
     // MARK: - Game Functions
 
-    func hostGame(json: JSON, socket: WebSocket, user: User) -> Bool {
+    func hostGame(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let name = json["name"]?.string else {
-            return false
+            throw ParseError.missingData
         }
 
         let game = GameController.instance.createGame()
 
         game.name = name
+        game.password = json["password"]?.string
 
         GameController.instance.registerGame(game)
 
         game.registerUser(user)
 
-        return true
+        var data = JSON()
+        data["id"] = JSON(game.id)
+        return data
     }
 }
