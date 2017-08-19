@@ -12,8 +12,8 @@ import Vapor
 class UserController {
     static let instance = UserController()
 
-    var activeUsers: Set<User> = []
-    var userSockets: [User: WebSocket] = [:]
+    private(set) var activeUsers: Set<User> = []
+    private(set) var userSockets: [User: WebSocket] = [:]
     var lowestAvailableId: Int = 0
 
     func createUser() -> User {

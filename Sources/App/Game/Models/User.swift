@@ -13,9 +13,13 @@ class User: Hashable {
     let id: Int
     var nickname: String?
 
+    weak var game: Game?
+
     init(id: Int) {
         self.id = id
     }
+
+    // MARK: - Hashable
 
     var hashValue: Int {
         return id

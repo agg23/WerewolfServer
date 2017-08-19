@@ -47,8 +47,13 @@ class SocketController {
         }
 
         switch command {
+        // User
         case "setNickname":
             return setNickname(json: json, socket: socket, user: user)
+
+        // Game
+        case "hostGame":
+            return hostGame(json: json, socket: socket, user: user)
         default:
             return false
         }
@@ -79,9 +84,29 @@ extension SocketController {
         send(json, socket: socket)
     }
 
+    // MARK: - User Functions
+
     func setNickname(json: JSON, socket: WebSocket, user: User) -> Bool {
         let nickname = json["nickname"]?.string
         user.nickname = nickname
+
+        return true
+    }
+
+    // MARK: - Game Functions
+
+    func hostGame(json: JSON, socket: WebSocket, user: User) -> Bool {
+        guard let name = json["name"]?.string else {
+            return false
+        }
+
+        let game = GameController.instance.createGame()
+
+        game.name = name
+
+        GameController.instance.registerGame(game)
+
+        game.registerUser(user)
 
         return true
     }
