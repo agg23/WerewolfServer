@@ -20,7 +20,7 @@ class SocketController {
             try self.socketResponse(socket: socket, text: text, user: user)
         }
 
-        sendStatus(.success, socket: socket)
+        sendStatus(.success, task: "connect", socket: socket)
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
@@ -28,7 +28,7 @@ class SocketController {
 
         let json = try JSON(bytes: Array(text.utf8))
         let status: MessageStatus = parse(json: json, socket: socket, user: user) ? .success : .failure
-        sendStatus(status, socket: socket)
+        sendStatus(status, task: json["command"]?.string, socket: socket)
     }
 
     func send(_ json: JSON, socket: WebSocket) {
@@ -62,9 +62,19 @@ extension SocketController {
         case failure = "failure"
     }
 
-    func sendStatus(_ status: MessageStatus, socket: WebSocket) {
+    func sendStatus(_ status: MessageStatus, task: String?, socket: WebSocket) {
         var json = JSON()
         json["command"] = "response"
+
+        let taskJson: JSON
+
+        if let task = task {
+            taskJson = JSON(task)
+        } else {
+            taskJson = JSON.null
+        }
+
+        json["task"] = taskJson
         json["status"] = JSON(status.rawValue)
         send(json, socket: socket)
     }
