@@ -31,7 +31,10 @@ class SocketController {
             }
         }
 
-        sendStatus(.success, task: "connect", data: nil, message: nil, socket: socket)
+        var json = JSON()
+        json["id"] = JSON(user.id)
+
+        sendStatus(.success, task: "connect", data: json, message: nil, socket: socket)
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
