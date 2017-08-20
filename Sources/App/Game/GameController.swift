@@ -13,6 +13,9 @@ class GameController {
     let availableCharacters: [WWCharacter.Type] = [WWCopycat.self, WWWerewolf.self, WWWerewolf.self, WWMinion.self, WWMason.self, WWMason.self, WWSeer.self, WWPI.self, WWRobber.self, WWWitch.self, WWTroublemaker.self, WWInsomniac.self]
 
     static let instance = GameController()
+    let userController = UserController.instance
+
+    let jsonFactory = JSONFactory()
 
     private(set) var games: Set<Game> = []
     var lowestAvailableId: Int = 0
@@ -48,7 +51,7 @@ class GameController {
 
         game.registerUser(user)
 
-        // TODO: Send current game status
+        updateGameStatus(game)
     }
 
     func leaveGame(user: User) throws {
@@ -59,8 +62,38 @@ class GameController {
         user.game = nil
         game.removeUser(user)
 
-        // TODO: Send current game status
+        updateGameStatus(game)
     }
+
+    // MARK: - Status
+
+    func updateGameStatus(_ game: Game) {
+        var json = jsonFactory.makeResponse("gameUpdate")
+
+        let userData = game.users.map { return jsonFactory.makeUser($0, using: game) }
+        let charactersInPlay = game.charactersInPlay.map { return jsonFactory.makeCharacterType($0) }
+        let status = game.internalGame.state?.status ?? .nogame
+
+        json["players"] = JSON(userData)
+        json["inPlay"] = JSON(charactersInPlay)
+        json["state"] = JSON(status.rawValue)
+
+        sendToUsers(json: json, in: game)
+    }
+
+    // MARK: - Communication
+
+    func sendToUsers(json: JSON, in game: Game) {
+        for user in game.users {
+            if let socket = userController.userSockets[user] {
+                socket.send(json: json)
+            } else {
+                // TODO: Handle unable to send to user
+            }
+        }
+    }
+
+    // MARK: - Utility
 
     func nextAvailableId() -> Int {
         let id = lowestAvailableId

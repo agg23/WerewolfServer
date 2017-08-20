@@ -17,6 +17,8 @@
 		666793341F47900D00C81558 /* WerewolfFramework_Mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666793331F47900D00C81558 /* WerewolfFramework_Mac.framework */; };
 		666793481F479B0F00C81558 /* SocketController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 666793471F479B0F00C81558 /* SocketController.swift */; };
 		6689414F1F49B5030018BED4 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689414E1F49B5030018BED4 /* Error.swift */; };
+		668941511F49BCE10018BED4 /* WebSocket+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941501F49BCE10018BED4 /* WebSocket+JSON.swift */; };
+		668941531F49BD740018BED4 /* JSONFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941521F49BD740018BED4 /* JSONFactory.swift */; };
 		OBJ_1002 /* http_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_470 /* http_parser.c */; };
 		OBJ_1004 /* Bits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_740 /* Bits.framework */; };
 		OBJ_1005 /* Debugging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_741 /* Debugging.framework */; };
@@ -4420,6 +4422,8 @@
 		666793331F47900D00C81558 /* WerewolfFramework_Mac.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WerewolfFramework_Mac.framework; path = "../../../../../../Library/Developer/Xcode/DerivedData/WerewolfServer-gzotgvdzcleihjfymdgtytqgkwen/Build/Products/Debug/WerewolfFramework_Mac.framework"; sourceTree = "<group>"; };
 		666793471F479B0F00C81558 /* SocketController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SocketController.swift; path = "Game/Web Controllers/SocketController.swift"; sourceTree = "<group>"; };
 		6689414E1F49B5030018BED4 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Game/Utility/Error.swift; sourceTree = "<group>"; };
+		668941501F49BCE10018BED4 /* WebSocket+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WebSocket+JSON.swift"; path = "Game/Utility/WebSocket+JSON.swift"; sourceTree = "<group>"; };
+		668941521F49BD740018BED4 /* JSONFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONFactory.swift; path = Game/Utility/JSONFactory.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Query+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+Group.swift"; sourceTree = "<group>"; };
 		OBJ_101 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		OBJ_103 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
@@ -5807,6 +5811,8 @@
 			isa = PBXGroup;
 			children = (
 				6689414E1F49B5030018BED4 /* Error.swift */,
+				668941501F49BCE10018BED4 /* WebSocket+JSON.swift */,
+				668941521F49BD740018BED4 /* JSONFactory.swift */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -9612,9 +9618,11 @@
 				OBJ_2284 /* Config+Setup.swift in Sources */,
 				6606735D1F48C98C00FD57BA /* UserController.swift in Sources */,
 				666792FE1F47897700C81558 /* GameInfoController.swift in Sources */,
+				668941511F49BCE10018BED4 /* WebSocket+JSON.swift in Sources */,
 				6689414F1F49B5030018BED4 /* Error.swift in Sources */,
 				OBJ_2287 /* PostController.swift in Sources */,
 				6606735F1F48CCF500FD57BA /* WebController.swift in Sources */,
+				668941531F49BD740018BED4 /* JSONFactory.swift in Sources */,
 				660673631F48EE5200FD57BA /* Game.swift in Sources */,
 				6606735B1F48B06A00FD57BA /* User.swift in Sources */,
 				OBJ_2288 /* Post.swift in Sources */,

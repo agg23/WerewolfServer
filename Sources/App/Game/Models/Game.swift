@@ -18,8 +18,14 @@ class Game: Hashable {
 
     var users: Set<User> = []
 
+    var assignments: [User: WWCharacter] = [:]
+
+    var internalGame: WWGame
+
     init(id: Int) {
         self.id = id
+
+        self.internalGame = WWGame(name: String(id))
     }
 
     func registerUser(_ user: User) {

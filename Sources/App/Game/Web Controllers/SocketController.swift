@@ -48,16 +48,6 @@ class SocketController {
         }
     }
 
-    func send(_ json: JSON, socket: WebSocket) {
-        do {
-            let bytes = try json.makeBytes()
-            try socket.send(bytes.makeString())
-        } catch {
-            // TODO: Handle
-            print("Socket sending error")
-        }
-    }
-
     func parse(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let command = json["command"]?.string else {
             return nil
@@ -110,7 +100,7 @@ extension SocketController {
         if let message = message {
             json["message"] = JSON(message)
         }
-        send(json, socket: socket)
+        socket.send(json: json)
     }
 
     // MARK: - User Functions
