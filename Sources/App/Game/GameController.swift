@@ -99,4 +99,8 @@ class GameController {
         lowestAvailableId += 1
         return id
     }
+
+    func character(for name: String) -> GameCharacter.Type? {
+        return availableCharacters.first(where: { return $0.name == name })
+    }
 }
