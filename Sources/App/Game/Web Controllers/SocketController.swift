@@ -85,6 +85,10 @@ class SocketController {
             return try hostGame(json: json, socket: socket, user: user)
         case "joinGame":
             return try joinGame(json: json, socket: socket, user: user)
+
+        case "ready":
+            try markUserReady(socket: socket, user: user)
+            return nil
         default:
             throw ParseError.invalidCommand
         }
@@ -195,5 +199,16 @@ extension SocketController {
         var data = JSON()
         data["id"] = JSON(game.id)
         return data
+    }
+
+    func markUserReady(socket: WebSocket, user: User) throws {
+        guard let game = user.game else {
+            throw GameController.GameError.userNotInGame
+        }
+
+        game.readyUser(user)
+
+        let _ = gameController.checkGameStatus(game)
+        gameController.updateGameStatus(game)
     }
 }

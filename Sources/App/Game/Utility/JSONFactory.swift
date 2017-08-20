@@ -33,6 +33,12 @@ class JSONFactory {
 
         json["assignment"] = assignment
 
+        if let ready = game.userReady[user] {
+            json["ready"] = JSON(ready)
+        } else {
+            Logger.warning("Ready state for user \(user.id) could not be determined")
+        }
+
         return json
     }
 

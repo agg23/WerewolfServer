@@ -10,9 +10,18 @@ import Vapor
 import FluentProvider
 
 class Game: Hashable {
+    enum State: String {
+        case starting = "starting"
+        case night = "night"
+        case discussion = "discussion"
+        case lobby = "lobby"
+    }
+
     let id: Int
     var name: String?
     var password: String?
+
+    var state: State
 
     var charactersInPlay: [GameCharacter.Type] = []
 
@@ -22,12 +31,18 @@ class Game: Hashable {
 
     var assignments: [User: GameCharacter] = [:]
 
+    var userReady: [User: Bool] = [:]
+
     init(id: Int) {
         self.id = id
+
+        self.state = .lobby
     }
 
     func registerUser(_ user: User) {
         users.insert(user)
+
+        userReady[user] = false
 
         user.game = self
     }
@@ -35,7 +50,17 @@ class Game: Hashable {
     func removeUser(_ user: User) {
         users.remove(user)
 
+        userReady.removeValue(forKey: user)
+
         user.game = nil
+    }
+
+    func readyUser(_ user: User) {
+        userReady[user] = true
+    }
+
+    func unreadyUser(_ user: User) {
+        userReady[user] = false
     }
 
     // MARK: - Utility

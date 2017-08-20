@@ -66,6 +66,33 @@ class GameController {
 
     // MARK: - Status
 
+    /// - returns: True if game update should be pushed to clients
+    func checkGameStatus(_ game: Game) -> Bool {
+        // TODO: Handle all states
+        var updatedState = false
+        switch game.state {
+        case .lobby:
+            guard game.userReady.contains(where: { return $0.value == false }) else {
+                return false
+            }
+
+            Logger.info("Game \(game.id) entering night")
+
+            game.state = .night
+            // TODO: Finish night updates
+            updatedState = true
+        case .starting:
+            game.state = .discussion
+            updatedState = checkGameStatus(game)
+        case .night:
+            break
+        case .discussion:
+            break
+        }
+
+        return updatedState
+    }
+
     func updateGameStatus(_ game: Game) {
         var json = jsonFactory.makeResponse("gameUpdate")
 
@@ -75,7 +102,7 @@ class GameController {
 
         json["players"] = JSON(userData)
         json["inPlay"] = JSON(charactersInPlay)
-//        json["state"] = JSON(status.rawValue)
+        json["state"] = JSON(game.state.rawValue)
 
         sendToUsers(json: json, in: game)
     }
