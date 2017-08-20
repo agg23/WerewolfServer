@@ -32,6 +32,10 @@ class SocketController {
             }
         }
 
+        socket.onPing = { (socket: WebSocket, frame: Bytes) in
+            print("Ping")
+        }
+
         var json = JSON()
         json["id"] = JSON(user.id)
 
@@ -39,6 +43,12 @@ class SocketController {
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
+        if text == "__ping__" {
+            // Send pong response
+            try socket.send("__pong__")
+            return
+        }
+
         print("Received message \(text)")
 
         var json: JSON = JSON.null
