@@ -109,6 +109,10 @@ extension SocketController {
         let nickname = json["nickname"]?.string
         user.nickname = nickname
 
+        if let game = user.game {
+            gameController.updateGameStatus(game)
+        }
+
         return nil
     }
 
