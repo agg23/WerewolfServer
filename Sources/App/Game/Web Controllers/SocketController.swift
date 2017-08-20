@@ -53,7 +53,7 @@ class SocketController {
 
     func parse(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let command = json["command"]?.string else {
-            return nil
+            throw ParseError.invalidCommand
         }
 
         switch command {
@@ -67,7 +67,7 @@ class SocketController {
         case "joinGame":
             return try joinGame(json: json, socket: socket, user: user)
         default:
-            return nil
+            throw ParseError.invalidCommand
         }
     }
 }
@@ -75,6 +75,7 @@ class SocketController {
 // MARK: - JSON Messages
 extension SocketController {
     enum ParseError: Error {
+        case invalidCommand
         case missingData
     }
 
