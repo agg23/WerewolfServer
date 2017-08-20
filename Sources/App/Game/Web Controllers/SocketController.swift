@@ -10,6 +10,8 @@ import Foundation
 import Vapor
 
 class SocketController {
+    let gameController = GameController.instance
+
     func socketHandler(_ request: Request, socket: WebSocket) throws {
         print("Opened connection")
 
@@ -20,7 +22,16 @@ class SocketController {
             try self.socketResponse(socket: socket, text: text, user: user)
         }
 
-        sendStatus(.success, task: "connect", data: nil, socket: socket)
+        socket.onClose = { (socket: WebSocket, code: UInt16?, reason: String?, clean: Bool) throws in
+            // Disconnect user
+            do {
+                try self.disconnectUser(user)
+            } catch {
+                // Do nothing
+            }
+        }
+
+        sendStatus(.success, task: "connect", data: nil, message: nil, socket: socket)
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
@@ -29,9 +40,11 @@ class SocketController {
         let json = try JSON(bytes: Array(text.utf8))
         do {
             let data = try parse(json: json, socket: socket, user: user)
-            sendStatus(.success, task: json["command"]?.string, data: data, socket: socket)
+            sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket)
         } catch ParseError.missingData {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, socket: socket)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Command not found", socket: socket)
+        } catch let error as GameController.GameError where GameController.GameError.allValues.contains(error) {
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket)
         }
     }
 
@@ -47,7 +60,7 @@ class SocketController {
 
     func parse(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let command = json["command"]?.string else {
-            return false
+            return nil
         }
 
         switch command {
@@ -58,8 +71,10 @@ class SocketController {
         // Game
         case "hostGame":
             return try hostGame(json: json, socket: socket, user: user)
+        case "joinGame":
+            return try joinGame(json: json, socket: socket, user: user)
         default:
-            return false
+            return nil
         }
     }
 }
@@ -75,7 +90,7 @@ extension SocketController {
         case failure = "failure"
     }
 
-    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, socket: WebSocket) {
+    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, message: String?, socket: WebSocket) {
         var json = JSON()
         json["command"] = "response"
 
@@ -92,6 +107,9 @@ extension SocketController {
         if let data = data {
             json["data"] = data
         }
+        if let message = message {
+            json["message"] = JSON(message)
+        }
         send(json, socket: socket)
     }
 
@@ -104,6 +122,10 @@ extension SocketController {
         return nil
     }
 
+    func disconnectUser(_ user: User) throws {
+        try gameController.leaveGame(user: user)
+    }
+
     // MARK: - Game Functions
 
     func hostGame(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
@@ -111,14 +133,30 @@ extension SocketController {
             throw ParseError.missingData
         }
 
-        let game = GameController.instance.createGame()
+        let game = gameController.createGame()
 
         game.name = name
         game.password = json["password"]?.string
 
-        GameController.instance.registerGame(game)
+        gameController.registerGame(game)
 
-        game.registerUser(user)
+        try gameController.joinGame(game, password: game.password, user: user)
+
+        var data = JSON()
+        data["id"] = JSON(game.id)
+        return data
+    }
+
+    func joinGame(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
+        guard let id = json["id"]?.int else {
+            throw ParseError.missingData
+        }
+
+        let password = json["password"]?.string
+
+        let game = try gameController.game(with: id)
+
+        try gameController.joinGame(game, password: password, user: user)
 
         var data = JSON()
         data["id"] = JSON(game.id)
