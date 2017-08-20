@@ -28,21 +28,21 @@ class Robber: GameCharacter {
 
     override func perform(action: Action, with game: Game, playerIndex: Int) {
         guard action.selections.count > 0 else {
-            print("[WARNING] Invalid Action for Robber")
+            Logger.warning("Invalid Action for Robber")
             return
         }
 
         let index = action.selections[0]
 
         guard game.orderedCharacters.count > index else {
-            print("[WARNING] Invalid player for Robber")
+            Logger.warning("Invalid player for Robber")
             return
         }
 
         let newCharacter = game.orderedCharacters[index]
 
         guard let selfIndex = game.orderedCharacters.index(where: { return $0 == self }) else {
-            print("[ERROR] Robber does not exist in game")
+            Logger.error("Robber does not exist in game")
             return
         }
 
@@ -55,14 +55,14 @@ class Robber: GameCharacter {
 
     override func received(action: Action, game: Game) -> Bool {
         guard action.selections.count > 0 else {
-            print("[WARNING] Invalid WWActionData for Robber")
+            Logger.warning("Invalid WWActionData for Robber")
             return false
         }
 
         let index = action.selections[0]
 
         guard game.orderedCharacters.count > index else {
-            print("[WARNING] Invalid selected character for Robber")
+            Logger.warning("Invalid selected character for Robber")
             return false
         }
 

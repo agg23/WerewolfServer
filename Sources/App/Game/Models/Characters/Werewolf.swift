@@ -50,14 +50,14 @@ class Werewolf: GameCharacter {
 
     override func received(action: Action, game: Game) -> Bool {
         guard action.selections.count > 0 else {
-            print("[WARNING] Invalid Action for Werewolf")
+            Logger.warning("Invalid Action for Werewolf")
             return false
         }
 
         let index = action.selections[0]
 
         guard game.orderedCharacters.count > index else {
-            print("[WARNING] Invalid selected character for Werewolf")
+            Logger.warning("Invalid selected character for Werewolf")
             return false
         }
 

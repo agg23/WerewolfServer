@@ -12,10 +12,12 @@ extension WebSocket {
     func send(json: JSON) {
         do {
             let bytes = try json.makeBytes()
-            try self.send(bytes.makeString())
+            let string = bytes.makeString()
+            Logger.info("Sending: \(string)")
+            try self.send(string)
         } catch {
             // TODO: Handle
-            print("Socket sending error")
+            Logger.error("Socket sending error")
         }
     }
 }

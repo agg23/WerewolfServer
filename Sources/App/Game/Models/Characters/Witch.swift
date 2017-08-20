@@ -31,7 +31,7 @@ class Witch: GameCharacter {
 
     override func perform(action: Action, with game: Game, playerIndex: Int) {
         guard action.selections.count > 1 else {
-            print("[WARNING] Not two WWActionData for Witch")
+            Logger.warning("Not two WWActionData for Witch")
             return
         }
 
@@ -54,14 +54,14 @@ class Witch: GameCharacter {
 
         if !humanPlayerSelect {
             guard action.selections.count > 0 else {
-                print("[WARNING] Invalid Action for Witch")
+                Logger.warning("Invalid Action for Witch")
                 return !temp
             }
 
             let firstIndex = action.selections[0]
 
             guard game.orderedCharacters.count > firstIndex else {
-                print("[WARNING] Invalid selected character for Witch")
+                Logger.warning("Invalid selected character for Witch")
                 return false
             }
 

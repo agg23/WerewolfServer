@@ -27,7 +27,7 @@ class Troublemaker: GameCharacter {
 
     override func perform(action: Action, with game: Game, playerIndex: Int) {
         guard action.selections.count > 1 else {
-            print("[WARNING] Invalid WWActionData for Troublemaker")
+            Logger.warning("Invalid WWActionData for Troublemaker")
             return
         }
 

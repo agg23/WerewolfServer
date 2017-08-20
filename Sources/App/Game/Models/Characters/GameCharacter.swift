@@ -53,7 +53,7 @@ class GameCharacter: Equatable {
 
     /// Interprets the provided Action (typically created from the GUI) and mutates the Game state
     func perform(action: Action, with game: Game, playerIndex: Int) {
-        print("[WARNING] Default action performed. Nothing was changed")
+        Logger.warning("Default action performed. Nothing was changed")
     }
 
     // Performs any changes dictated by the current Game before entering night, such as a solo Werewolf adding a selectable

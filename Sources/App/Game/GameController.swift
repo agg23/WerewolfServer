@@ -26,7 +26,7 @@ class GameController {
     func registerGame(_ game: Game) {
         games.insert(game)
 
-        print("Registered game \(game.id)")
+        Logger.info("Registered game \(game.id)")
     }
 
     func game(with id: Int) throws -> Game {

@@ -104,6 +104,18 @@
       "version": "2.0.1"
     },
     {
+      "package": "SwiftyBeaver",
+      "reason": null,
+      "repositoryURL": "https://github.com/SwiftyBeaver/SwiftyBeaver.git",
+      "version": "1.4.0"
+    },
+    {
+      "package": "SwiftyBeaverProvider",
+      "reason": null,
+      "repositoryURL": "https://github.com/vapor-community/swiftybeaver-provider.git",
+      "version": "1.0.2"
+    },
+    {
       "package": "TLS",
       "reason": null,
       "repositoryURL": "https://github.com/vapor/tls.git",

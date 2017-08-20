@@ -31,7 +31,7 @@ class Seer: GameCharacter {
 
     override func received(action: Action, game: Game) -> Bool {
         guard action.selections.count > 1 else {
-            print("[WARNING] Invalid Action for Seer")
+            Logger.warning("Invalid Action for Seer")
             return false
         }
 
@@ -39,7 +39,7 @@ class Seer: GameCharacter {
         let secondIndex = action.selections[1]
 
         guard game.orderedCharacters.count > max(firstIndex, secondIndex) else {
-            print("[WARNING] Invalid selected character(s) for Seer")
+            Logger.warning("Invalid selected character(s) for Seer")
             return false
         }
 

@@ -30,7 +30,7 @@ class Copycat: GameCharacter {
 
     override func perform(action: Action, with game: Game, playerIndex: Int) {
         guard let character = self.inheritedCharacter else {
-            print("[WARNING] Invalid inherited character for Copycat")
+            Logger.warning("Invalid inherited character for Copycat")
             return
         }
 
@@ -39,7 +39,7 @@ class Copycat: GameCharacter {
 
     override func received(action: Action, game: Game) -> Bool {
         guard action.selections.count > 0 else {
-            print("[WARNING] Invalid Action for Copycat")
+            Logger.warning("Invalid Action for Copycat")
             return false
         }
 
@@ -59,7 +59,7 @@ class Copycat: GameCharacter {
 
                 updateCharacterProperties()
             } else {
-                print("[WARNING] Invalid selected character for Copycat")
+                Logger.warning("Invalid selected character for Copycat")
             }
         }
 
@@ -68,7 +68,7 @@ class Copycat: GameCharacter {
 
     private func updateCharacterProperties() {
         guard let character = self.inheritedCharacter else {
-            print("[WARNING] Invalid inherited character for Copycat. Can't update properties")
+            Logger.error("Invalid inherited character for Copycat. Can't update properties")
             return
         }
 

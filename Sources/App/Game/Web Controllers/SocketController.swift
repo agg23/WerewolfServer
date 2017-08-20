@@ -13,7 +13,7 @@ class SocketController {
     let gameController = GameController.instance
 
     func socketHandler(_ request: Request, socket: WebSocket) throws {
-        print("Opened connection")
+        Logger.info("Opened connection")
 
         let user = UserController.instance.createUser()
         UserController.instance.registerUser(user, with: socket)
@@ -23,7 +23,7 @@ class SocketController {
         }
 
         socket.onClose = { (socket: WebSocket, code: UInt16?, reason: String?, clean: Bool) throws in
-            print("Socket closed for user \(user.id)")
+            Logger.info("Socket closed for user \(user.id)")
             // Disconnect user
             do {
                 try self.disconnectUser(user)
@@ -33,7 +33,7 @@ class SocketController {
         }
 
         socket.onPing = { (socket: WebSocket, frame: Bytes) in
-            print("Ping")
+            Logger.info("Ping")
         }
 
         var json = JSON()
@@ -49,7 +49,7 @@ class SocketController {
             return
         }
 
-        print("Received message \(text)")
+        Logger.info("Received message \(text)")
 
         var json: JSON = JSON.null
 

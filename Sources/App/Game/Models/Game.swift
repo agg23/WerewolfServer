@@ -52,7 +52,7 @@ class Game: Hashable {
 
     func isPlayer(with character: GameCharacter) -> Bool {
         guard let index = orderedCharacters.index(where: { return $0 == character }) else {
-            print("Character does not exist in this game")
+            Logger.error("Character does not exist in this game")
             return false
         }
 
