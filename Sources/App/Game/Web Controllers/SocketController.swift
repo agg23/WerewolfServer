@@ -12,6 +12,8 @@ import Vapor
 class SocketController {
     let gameController = GameController.instance
 
+    var version: String!
+
     func socketHandler(_ request: Request, socket: WebSocket) throws {
         Logger.info("Opened connection")
 
@@ -38,6 +40,7 @@ class SocketController {
 
         var json = JSON()
         json["id"] = JSON(user.id)
+        json["serverVersion"] = JSON(version)
 
         sendStatus(.success, task: "connect", data: json, message: nil, socket: socket)
     }
