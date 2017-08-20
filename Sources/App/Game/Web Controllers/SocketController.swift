@@ -23,6 +23,7 @@ class SocketController {
         }
 
         socket.onClose = { (socket: WebSocket, code: UInt16?, reason: String?, clean: Bool) throws in
+            print("Socket closed for user \(user.id)")
             // Disconnect user
             do {
                 try self.disconnectUser(user)
@@ -40,8 +41,10 @@ class SocketController {
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
         print("Received message \(text)")
 
-        let json = try JSON(bytes: Array(text.utf8))
+        var json: JSON = JSON.null
+
         do {
+            json = try JSON(bytes: Array(text.utf8))
             let data = try parse(json: json, socket: socket, user: user)
             sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket)
         } catch ParseError.missingData(let message) {
@@ -50,6 +53,8 @@ class SocketController {
             sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket)
         } catch let error as GameController.GameError where GameController.GameError.allValues.contains(error) {
             sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket)
+        } catch {
+            sendStatus(.failure, task: nil, data: nil, message: "Unknown message", socket: socket)
         }
     }
 
