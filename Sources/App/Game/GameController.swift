@@ -17,7 +17,7 @@ class GameController {
     let jsonFactory = JSONFactory()
 
     private(set) var games: Set<Game> = []
-    var lowestAvailableId: Int = 0
+    private var lowestAvailableId: Int = 0
 
     func createGame() -> Game {
         return Game(id: nextAvailableId())
@@ -79,7 +79,24 @@ class GameController {
             Logger.info("Game \(game.id) entering night")
 
             game.state = .night
+
+            // Create non-player users
+            var nonHumanUsers: [User] = []
+
+            for _ in 0 ..< game.nonHumanCount {
+                nonHumanUsers.append(userController.createUser(isHuman: false))
+            }
+
+            game.users.append(contentsOf: nonHumanUsers)
+
+            // Shuffle characters and instantiate them
+            let shuffledCharacters = game.charactersInPlay.shuffled()
+            let characters = shuffledCharacters.map({ return $0.init(id: game.nextAvailableId()) })
+
+            // Assign characters to users
+            game.mapCharactersToUsers(characters: characters)
             // TODO: Finish night updates
+            // TODO: Send each user their allowed selections
             updatedState = true
         case .starting:
             game.state = .discussion
@@ -98,7 +115,6 @@ class GameController {
 
         let userData = game.users.map { return jsonFactory.makeUser($0, using: game) }
         let charactersInPlay = game.charactersInPlay.map { return jsonFactory.makeCharacterType($0) }
-//        let status = game.internalGame.state?.status ?? .nogame
 
         json["players"] = JSON(userData)
         json["inPlay"] = JSON(charactersInPlay)
@@ -110,7 +126,7 @@ class GameController {
     // MARK: - Communication
 
     func sendToUsers(json: JSON, in game: Game) {
-        for user in game.users {
+        for user in game.users where user.isHuman {
             if let socket = userController.userSockets[user] {
                 socket.send(json: json)
             } else {

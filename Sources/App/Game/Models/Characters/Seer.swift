@@ -38,13 +38,19 @@ class Seer: GameCharacter {
         let firstIndex = action.selections[0]
         let secondIndex = action.selections[1]
 
-        guard game.orderedCharacters.count > max(firstIndex, secondIndex) else {
-            Logger.warning("Invalid selected character(s) for Seer")
+        guard game.users.count > max(firstIndex, secondIndex) else {
+            Logger.warning("Invalid selected user(s) for Seer")
             return false
         }
 
-        let firstCharacter = game.orderedCharacters[firstIndex]
-        let secondCharacter = game.orderedCharacters[secondIndex]
+        let firstUser = game.users[firstIndex]
+        let secondUser = game.users[secondIndex]
+
+        guard let firstCharacter = game.assignments[firstUser],
+            let secondCharacter = game.assignments[secondUser] else {
+            Logger.error("Character assignments do not exist for user")
+            return false
+        }
 
         self.seenAssignments[firstIndex] = type(of: firstCharacter)
         self.seenAssignments[secondIndex] = type(of: secondCharacter)

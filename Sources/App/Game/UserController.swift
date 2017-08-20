@@ -16,8 +16,8 @@ class UserController {
     private(set) var userSockets: [User: WebSocket] = [:]
     var lowestAvailableId: Int = 0
 
-    func createUser() -> User {
-        return User(id: nextAvailableId())
+    func createUser(isHuman: Bool = true) -> User {
+        return User(id: nextAvailableId(), isHuman: isHuman)
     }
 
     func registerUser(_ user: User, with socket: WebSocket) {

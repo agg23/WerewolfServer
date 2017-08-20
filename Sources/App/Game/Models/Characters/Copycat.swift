@@ -51,8 +51,13 @@ class Copycat: GameCharacter {
             return received
         } else {
             // Set new character
-            if game.orderedCharacters.count > index {
-                let character = game.orderedCharacters[index]
+            if game.users.count > index {
+                let user = game.users[index]
+
+                guard let character = game.assignments[user] else {
+                    Logger.error("Character assignment does not exist for user")
+                    return false
+                }
                 self.seenAssignments[index] = type(of: character)
 
                 self.inheritedCharacter = character

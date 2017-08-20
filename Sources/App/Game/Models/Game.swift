@@ -21,17 +21,20 @@ class Game: Hashable {
     var name: String?
     var password: String?
 
+    var nonHumanCount: Int = 3
+
     var state: State
 
     var charactersInPlay: [GameCharacter.Type] = []
 
-    var users: Set<User> = []
+    var users: [User] = []
     var userIndexes: Set<Int> = []
-    var orderedCharacters: [GameCharacter] = []
+
+    var userReady: [User: Bool] = [:]
 
     var assignments: [User: GameCharacter] = [:]
 
-    var userReady: [User: Bool] = [:]
+    private var lowestAvailableId: Int = 0
 
     init(id: Int) {
         self.id = id
@@ -40,7 +43,7 @@ class Game: Hashable {
     }
 
     func registerUser(_ user: User) {
-        users.insert(user)
+        users.append(user)
 
         userReady[user] = false
 
@@ -48,7 +51,9 @@ class Game: Hashable {
     }
 
     func removeUser(_ user: User) {
-        users.remove(user)
+        if let index = users.index(of: user) {
+            users.remove(at: index)
+        }
 
         userReady.removeValue(forKey: user)
 
@@ -65,27 +70,47 @@ class Game: Hashable {
 
     // MARK: - Utility
 
-    func swap(firstCharacter firstIndex: Int, secondCharacter secondIndex: Int) {
-        let temp = self.orderedCharacters[firstIndex]
-        let temp2 = self.orderedCharacters[secondIndex]
+    func swap(firstUser first: Int, secondUser second: Int) {
+        let firstUser = users[first]
+        let secondUser = users[second]
 
-        self.orderedCharacters[firstIndex] = temp2
-        self.orderedCharacters[secondIndex] = temp
+        let temp = assignments[firstUser]
+        let temp2 = assignments[secondUser]
 
-        // TODO: Update assignments
+        assignments[firstUser] = temp2
+        assignments[secondUser] = temp
     }
 
-    func isPlayer(with character: GameCharacter) -> Bool {
-        guard let index = orderedCharacters.index(where: { return $0 == character }) else {
+    func mapCharactersToUsers(characters: [GameCharacter]) {
+        guard characters.count == users.count else {
+            Logger.error("Unequal number of characters and users")
+            return
+        }
+
+        for (i, user) in zip(users.indices, users) {
+            let character = characters[i]
+            assignments[user] = character
+        }
+    }
+
+    func user(for character: GameCharacter) -> User? {
+        let tuple = assignments.first(where: { return $0.value == character })
+        return tuple?.key
+    }
+
+    func isHuman(with character: GameCharacter) -> Bool {
+        guard let user = user(for: character) else {
             Logger.error("Character does not exist in this game")
             return false
         }
 
-        return isPlayer(at: index)
+        return user.isHuman
     }
 
-    func isPlayer(at index: Int) -> Bool {
-        return userIndexes.contains(index)
+    func nextAvailableId() -> Int {
+        let id = lowestAvailableId
+        lowestAvailableId += 1
+        return id
     }
 
     // MARK: - Hashable

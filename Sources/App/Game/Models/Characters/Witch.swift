@@ -39,7 +39,7 @@ class Witch: GameCharacter {
         let secondIndex = action.selections[1]
 
         // Nonhuman card
-        game.swap(firstCharacter: firstIndex, secondCharacter: secondIndex)
+        game.swap(firstUser: firstIndex, secondUser: secondIndex)
     }
 
     override func beginNight(with game: Game) {
@@ -58,15 +58,21 @@ class Witch: GameCharacter {
                 return !temp
             }
 
-            let firstIndex = action.selections[0]
+            let index = action.selections[0]
 
-            guard game.orderedCharacters.count > firstIndex else {
-                Logger.warning("Invalid selected character for Witch")
+            guard game.users.count > index else {
+                Logger.warning("Invalid selected user for Witch")
                 return false
             }
 
-            let character = game.orderedCharacters[firstIndex]
-            seenAssignments[firstIndex] = type(of: character)
+            let user = game.users[index]
+
+            guard let character = game.assignments[user] else {
+                Logger.error("Character assignment does not exist for user")
+                return false
+            }
+
+            seenAssignments[index] = type(of: character)
         } else if !selectionComplete {
             selectionComplete = true
             return true

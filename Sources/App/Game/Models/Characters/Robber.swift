@@ -34,22 +34,26 @@ class Robber: GameCharacter {
 
         let index = action.selections[0]
 
-        guard game.orderedCharacters.count > index else {
-            Logger.warning("Invalid player for Robber")
+        guard game.users.count > index else {
+            Logger.warning("Invalid selected user for Robber")
             return
         }
 
-        let newCharacter = game.orderedCharacters[index]
+        let user = game.users[index]
 
-        guard let selfIndex = game.orderedCharacters.index(where: { return $0 == self }) else {
-            Logger.error("Robber does not exist in game")
+        guard let newCharacter = game.assignments[user] else {
+            Logger.error("Character assignment does not exist for user")
             return
         }
 
-        game.orderedCharacters[selfIndex] = newCharacter
+        guard let selfUser = game.user(for: self) else {
+            Logger.error("Rogger does not exist in game")
+            return
+        }
 
-        game.orderedCharacters[index] = self
-        // TODO: Update assignments
+        game.assignments[selfUser] = newCharacter
+
+        game.assignments[user] = self
         // TODO: Just call swap?
     }
 
@@ -61,12 +65,18 @@ class Robber: GameCharacter {
 
         let index = action.selections[0]
 
-        guard game.orderedCharacters.count > index else {
-            Logger.warning("Invalid selected character for Robber")
+        guard game.users.count > index else {
+            Logger.warning("Invalid selected user for Robber")
             return false
         }
 
-        let character = game.orderedCharacters[index]
+        let user = game.users[index]
+
+        guard let character = game.assignments[user] else {
+            Logger.error("Character assignment does not exist for user")
+            return false
+        }
+
         self.seenAssignments[index] = type(of: character)
 
         self.selectionComplete = true

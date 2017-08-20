@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		66267C641F4A2FA10013C9B5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66267C631F4A2FA10013C9B5 /* Logger.swift */; };
+		66267C661F4A49D10013C9B5 /* GeneralExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66267C651F4A49D10013C9B5 /* GeneralExtensions.swift */; };
 		OBJ_1000 /* FoundationStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_700 /* FoundationStream.swift */; };
 		OBJ_1001 /* ReadableStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_701 /* ReadableStream.swift */; };
 		OBJ_1002 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_702 /* Stream.swift */; };
@@ -4726,6 +4727,7 @@
 
 /* Begin PBXFileReference section */
 		66267C631F4A2FA10013C9B5 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		66267C651F4A49D10013C9B5 /* GeneralExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralExtensions.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Droplet+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Droplet+Setup.swift"; sourceTree = "<group>"; };
 		OBJ_100 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		OBJ_101 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
@@ -6887,6 +6889,7 @@
 				OBJ_38 /* Error.swift */,
 				OBJ_39 /* JSONFactory.swift */,
 				OBJ_40 /* WebSocket+JSON.swift */,
+				66267C651F4A49D10013C9B5 /* GeneralExtensions.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -10217,6 +10220,7 @@
 				66267C641F4A2FA10013C9B5 /* Logger.swift in Sources */,
 				OBJ_2441 /* Seer.swift in Sources */,
 				OBJ_2442 /* Troublemaker.swift in Sources */,
+				66267C661F4A49D10013C9B5 /* GeneralExtensions.swift in Sources */,
 				OBJ_2443 /* Werewolf.swift in Sources */,
 				OBJ_2444 /* Witch.swift in Sources */,
 			);

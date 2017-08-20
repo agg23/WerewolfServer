@@ -34,6 +34,6 @@ class Troublemaker: GameCharacter {
         let firstIndex = action.selections[0]
         let secondIndex = action.selections[1]
         
-        game.swap(firstCharacter: firstIndex, secondCharacter: secondIndex)
+        game.swap(firstUser: firstIndex, secondUser: secondIndex)
     }
 }
