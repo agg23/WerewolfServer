@@ -8,7 +8,6 @@
 
 import Foundation
 import JSON
-import WerewolfFramework_Mac
 
 class JSONFactory {
     func makeResponse(_ response: String) -> JSON {

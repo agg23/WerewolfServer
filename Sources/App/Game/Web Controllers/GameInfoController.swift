@@ -8,7 +8,6 @@
 
 import Vapor
 import HTTP
-import WerewolfFramework_Mac
 
 class GameInfoController {
     func availableCharacters(_ request: Request) throws -> ResponseRepresentable {

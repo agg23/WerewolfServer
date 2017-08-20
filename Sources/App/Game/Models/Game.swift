@@ -8,7 +8,6 @@
 
 import Vapor
 import FluentProvider
-import WerewolfFramework_Mac
 
 class Game: Hashable {
     let id: Int
