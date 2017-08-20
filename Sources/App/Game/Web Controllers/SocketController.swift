@@ -44,8 +44,10 @@ class SocketController {
         do {
             let data = try parse(json: json, socket: socket, user: user)
             sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket)
-        } catch ParseError.missingData {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Command not found", socket: socket)
+        } catch ParseError.missingData(let message) {
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: message, socket: socket)
+        } catch ParseError.invalidCommand {
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket)
         } catch let error as GameController.GameError where GameController.GameError.allValues.contains(error) {
             sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket)
         }
@@ -76,7 +78,7 @@ class SocketController {
 extension SocketController {
     enum ParseError: Error {
         case invalidCommand
-        case missingData
+        case missingData(String)
     }
 
     enum MessageStatus: String {
@@ -128,7 +130,7 @@ extension SocketController {
 
     func hostGame(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let name = json["name"]?.string else {
-            throw ParseError.missingData
+            throw ParseError.missingData("Missing field 'name'")
         }
 
         let game = gameController.createGame()
@@ -147,7 +149,7 @@ extension SocketController {
 
     func joinGame(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
         guard let id = json["id"]?.int else {
-            throw ParseError.missingData
+            throw ParseError.missingData("Missing field 'id'")
         }
 
         let password = json["password"]?.string
