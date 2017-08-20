@@ -13,18 +13,17 @@ class Game: Hashable {
     let id: Int
     var name: String?
     var password: String?
-    private(set) var charactersInPlay: [WWCharacter.Type] = []
+
+    var charactersInPlay: [GameCharacter.Type] = []
 
     var users: Set<User> = []
+    var userIndexes: Set<Int> = []
+    var orderedCharacters: [GameCharacter] = []
 
-    var assignments: [User: WWCharacter] = [:]
-
-    var internalGame: WWGame
+    var assignments: [User: GameCharacter] = [:]
 
     init(id: Int) {
         self.id = id
-
-        self.internalGame = WWGame(name: String(id))
     }
 
     func registerUser(_ user: User) {
@@ -37,6 +36,31 @@ class Game: Hashable {
         users.remove(user)
 
         user.game = nil
+    }
+
+    // MARK: - Utility
+
+    func swap(firstCharacter firstIndex: Int, secondCharacter secondIndex: Int) {
+        let temp = self.orderedCharacters[firstIndex]
+        let temp2 = self.orderedCharacters[secondIndex]
+
+        self.orderedCharacters[firstIndex] = temp2
+        self.orderedCharacters[secondIndex] = temp
+
+        // TODO: Update assignments
+    }
+
+    func isPlayer(with character: GameCharacter) -> Bool {
+        guard let index = orderedCharacters.index(where: { return $0 == character }) else {
+            print("Character does not exist in this game")
+            return false
+        }
+
+        return isPlayer(at: index)
+    }
+
+    func isPlayer(at index: Int) -> Bool {
+        return userIndexes.contains(index)
     }
 
     // MARK: - Hashable

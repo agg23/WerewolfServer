@@ -36,16 +36,16 @@ class JSONFactory {
         return json
     }
 
-    func makeCharacterType(_ characterType: WWCharacter.Type) -> JSON {
+    func makeCharacterType(_ characterType: GameCharacter.Type) -> JSON {
         var json = JSON()
 
-        json["name"] = JSON(WWCharacter.name(type: characterType))
+        json["name"] = JSON(characterType.name)
         // TODO: Add id (other info?)
 
         return json
     }
 
-    func makeCharacter(_ character: WWCharacter) -> JSON {
+    func makeCharacter(_ character: GameCharacter) -> JSON {
         // TODO: Fix
         return JSON.null
     }

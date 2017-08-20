@@ -13,7 +13,7 @@ class GameInfoController {
     func availableCharacters(_ request: Request) throws -> ResponseRepresentable {
         let gameController = GameController()
 
-        let names = gameController.availableCharacters.map { return WWCharacter.name(type: $0) }
+        let names = gameController.availableCharacters.map { return $0.name }
         var json = JSON()
 
         json["characters"] = try JSON(node: names)

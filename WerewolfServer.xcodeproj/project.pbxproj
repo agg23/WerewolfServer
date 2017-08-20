@@ -18,22 +18,21 @@
 		6689414F1F49B5030018BED4 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689414E1F49B5030018BED4 /* Error.swift */; };
 		668941511F49BCE10018BED4 /* WebSocket+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941501F49BCE10018BED4 /* WebSocket+JSON.swift */; };
 		668941531F49BD740018BED4 /* JSONFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941521F49BD740018BED4 /* JSONFactory.swift */; };
-		668941611F49D4880018BED4 /* WWCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941561F49D4880018BED4 /* WWCharacter.swift */; };
-		668941621F49D4880018BED4 /* WWCopycat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941571F49D4880018BED4 /* WWCopycat.swift */; };
-		668941631F49D4880018BED4 /* WWInsomniac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941581F49D4880018BED4 /* WWInsomniac.swift */; };
-		668941641F49D4880018BED4 /* WWMason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941591F49D4880018BED4 /* WWMason.swift */; };
-		668941651F49D4880018BED4 /* WWMinion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415A1F49D4880018BED4 /* WWMinion.swift */; };
-		668941661F49D4880018BED4 /* WWPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415B1F49D4880018BED4 /* WWPI.swift */; };
-		668941671F49D4880018BED4 /* WWRobber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415C1F49D4880018BED4 /* WWRobber.swift */; };
-		668941681F49D4880018BED4 /* WWSeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415D1F49D4880018BED4 /* WWSeer.swift */; };
-		668941691F49D4880018BED4 /* WWTroublemaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415E1F49D4880018BED4 /* WWTroublemaker.swift */; };
-		6689416A1F49D4880018BED4 /* WWWerewolf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689415F1F49D4880018BED4 /* WWWerewolf.swift */; };
-		6689416B1F49D4880018BED4 /* WWWitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941601F49D4880018BED4 /* WWWitch.swift */; };
-		6689416F1F49D5060018BED4 /* WWAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689416D1F49D5060018BED4 /* WWAction.swift */; };
-		668941701F49D5060018BED4 /* WWActionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689416E1F49D5060018BED4 /* WWActionData.swift */; };
 		668941751F49D5340018BED4 /* WWGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941721F49D5340018BED4 /* WWGame.swift */; };
 		668941761F49D5340018BED4 /* WWPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941731F49D5340018BED4 /* WWPlayer.swift */; };
 		668941771F49D5340018BED4 /* WWState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941741F49D5340018BED4 /* WWState.swift */; };
+		668941791F49E3E40018BED4 /* GameCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941781F49E3E40018BED4 /* GameCharacter.swift */; };
+		6689417B1F49E7210018BED4 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689417A1F49E7210018BED4 /* Action.swift */; };
+		6689417D1F49EF910018BED4 /* Copycat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689417C1F49EF910018BED4 /* Copycat.swift */; };
+		6689417F1F49F76E0018BED4 /* Insomniac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689417E1F49F76E0018BED4 /* Insomniac.swift */; };
+		668941811F49F7B90018BED4 /* Mason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941801F49F7B90018BED4 /* Mason.swift */; };
+		668941831F49F84C0018BED4 /* Minion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941821F49F84C0018BED4 /* Minion.swift */; };
+		668941851F49F8B50018BED4 /* Werewolf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941841F49F8B50018BED4 /* Werewolf.swift */; };
+		668941871F4A023D0018BED4 /* ParanormalInvestigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941861F4A023D0018BED4 /* ParanormalInvestigator.swift */; };
+		668941891F4A032A0018BED4 /* Robber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668941881F4A032A0018BED4 /* Robber.swift */; };
+		6689418B1F4A04BB0018BED4 /* Seer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689418A1F4A04BB0018BED4 /* Seer.swift */; };
+		6689418D1F4A06D80018BED4 /* Troublemaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689418C1F4A06D80018BED4 /* Troublemaker.swift */; };
+		6689418F1F4A08030018BED4 /* Witch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689418E1F4A08030018BED4 /* Witch.swift */; };
 		OBJ_1002 /* http_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_470 /* http_parser.c */; };
 		OBJ_1004 /* Bits.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_740 /* Bits.framework */; };
 		OBJ_1005 /* Debugging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = OBJ_741 /* Debugging.framework */; };
@@ -4439,22 +4438,21 @@
 		6689414E1F49B5030018BED4 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Game/Utility/Error.swift; sourceTree = "<group>"; };
 		668941501F49BCE10018BED4 /* WebSocket+JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "WebSocket+JSON.swift"; path = "Game/Utility/WebSocket+JSON.swift"; sourceTree = "<group>"; };
 		668941521F49BD740018BED4 /* JSONFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONFactory.swift; path = Game/Utility/JSONFactory.swift; sourceTree = "<group>"; };
-		668941561F49D4880018BED4 /* WWCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWCharacter.swift; path = Game/Models/Characters/WWCharacter.swift; sourceTree = "<group>"; };
-		668941571F49D4880018BED4 /* WWCopycat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWCopycat.swift; path = Game/Models/Characters/WWCopycat.swift; sourceTree = "<group>"; };
-		668941581F49D4880018BED4 /* WWInsomniac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWInsomniac.swift; path = Game/Models/Characters/WWInsomniac.swift; sourceTree = "<group>"; };
-		668941591F49D4880018BED4 /* WWMason.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWMason.swift; path = Game/Models/Characters/WWMason.swift; sourceTree = "<group>"; };
-		6689415A1F49D4880018BED4 /* WWMinion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWMinion.swift; path = Game/Models/Characters/WWMinion.swift; sourceTree = "<group>"; };
-		6689415B1F49D4880018BED4 /* WWPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWPI.swift; path = Game/Models/Characters/WWPI.swift; sourceTree = "<group>"; };
-		6689415C1F49D4880018BED4 /* WWRobber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWRobber.swift; path = Game/Models/Characters/WWRobber.swift; sourceTree = "<group>"; };
-		6689415D1F49D4880018BED4 /* WWSeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWSeer.swift; path = Game/Models/Characters/WWSeer.swift; sourceTree = "<group>"; };
-		6689415E1F49D4880018BED4 /* WWTroublemaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWTroublemaker.swift; path = Game/Models/Characters/WWTroublemaker.swift; sourceTree = "<group>"; };
-		6689415F1F49D4880018BED4 /* WWWerewolf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWWerewolf.swift; path = Game/Models/Characters/WWWerewolf.swift; sourceTree = "<group>"; };
-		668941601F49D4880018BED4 /* WWWitch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWWitch.swift; path = Game/Models/Characters/WWWitch.swift; sourceTree = "<group>"; };
-		6689416D1F49D5060018BED4 /* WWAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWAction.swift; path = Game/Models/Actions/WWAction.swift; sourceTree = "<group>"; };
-		6689416E1F49D5060018BED4 /* WWActionData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWActionData.swift; path = Game/Models/Actions/WWActionData.swift; sourceTree = "<group>"; };
 		668941721F49D5340018BED4 /* WWGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWGame.swift; path = Game/Logic/WWGame.swift; sourceTree = "<group>"; };
 		668941731F49D5340018BED4 /* WWPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWPlayer.swift; path = Game/Logic/WWPlayer.swift; sourceTree = "<group>"; };
 		668941741F49D5340018BED4 /* WWState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WWState.swift; path = Game/Logic/WWState.swift; sourceTree = "<group>"; };
+		668941781F49E3E40018BED4 /* GameCharacter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameCharacter.swift; path = Game/Models/Characters/GameCharacter.swift; sourceTree = "<group>"; };
+		6689417A1F49E7210018BED4 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Action.swift; path = Game/Models/Actions/Action.swift; sourceTree = "<group>"; };
+		6689417C1F49EF910018BED4 /* Copycat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Copycat.swift; path = Game/Models/Characters/Copycat.swift; sourceTree = "<group>"; };
+		6689417E1F49F76E0018BED4 /* Insomniac.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Insomniac.swift; path = Game/Models/Characters/Insomniac.swift; sourceTree = "<group>"; };
+		668941801F49F7B90018BED4 /* Mason.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mason.swift; path = Game/Models/Characters/Mason.swift; sourceTree = "<group>"; };
+		668941821F49F84C0018BED4 /* Minion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Minion.swift; path = Game/Models/Characters/Minion.swift; sourceTree = "<group>"; };
+		668941841F49F8B50018BED4 /* Werewolf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Werewolf.swift; path = Game/Models/Characters/Werewolf.swift; sourceTree = "<group>"; };
+		668941861F4A023D0018BED4 /* ParanormalInvestigator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ParanormalInvestigator.swift; path = Game/Models/Characters/ParanormalInvestigator.swift; sourceTree = "<group>"; };
+		668941881F4A032A0018BED4 /* Robber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Robber.swift; path = Game/Models/Characters/Robber.swift; sourceTree = "<group>"; };
+		6689418A1F4A04BB0018BED4 /* Seer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Seer.swift; path = Game/Models/Characters/Seer.swift; sourceTree = "<group>"; };
+		6689418C1F4A06D80018BED4 /* Troublemaker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Troublemaker.swift; path = Game/Models/Characters/Troublemaker.swift; sourceTree = "<group>"; };
+		6689418E1F4A08030018BED4 /* Witch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Witch.swift; path = Game/Models/Characters/Witch.swift; sourceTree = "<group>"; };
 		OBJ_100 /* Query+Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Query+Group.swift"; sourceTree = "<group>"; };
 		OBJ_101 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		OBJ_103 /* Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Children.swift; sourceTree = "<group>"; };
@@ -5853,17 +5851,17 @@
 		668941551F49D4420018BED4 /* Characters */ = {
 			isa = PBXGroup;
 			children = (
-				668941561F49D4880018BED4 /* WWCharacter.swift */,
-				668941571F49D4880018BED4 /* WWCopycat.swift */,
-				668941581F49D4880018BED4 /* WWInsomniac.swift */,
-				668941591F49D4880018BED4 /* WWMason.swift */,
-				6689415A1F49D4880018BED4 /* WWMinion.swift */,
-				6689415B1F49D4880018BED4 /* WWPI.swift */,
-				6689415C1F49D4880018BED4 /* WWRobber.swift */,
-				6689415D1F49D4880018BED4 /* WWSeer.swift */,
-				6689415E1F49D4880018BED4 /* WWTroublemaker.swift */,
-				6689415F1F49D4880018BED4 /* WWWerewolf.swift */,
-				668941601F49D4880018BED4 /* WWWitch.swift */,
+				668941781F49E3E40018BED4 /* GameCharacter.swift */,
+				6689417C1F49EF910018BED4 /* Copycat.swift */,
+				6689417E1F49F76E0018BED4 /* Insomniac.swift */,
+				668941801F49F7B90018BED4 /* Mason.swift */,
+				668941821F49F84C0018BED4 /* Minion.swift */,
+				668941861F4A023D0018BED4 /* ParanormalInvestigator.swift */,
+				668941881F4A032A0018BED4 /* Robber.swift */,
+				6689418A1F4A04BB0018BED4 /* Seer.swift */,
+				6689418C1F4A06D80018BED4 /* Troublemaker.swift */,
+				668941841F49F8B50018BED4 /* Werewolf.swift */,
+				6689418E1F4A08030018BED4 /* Witch.swift */,
 			);
 			name = Characters;
 			sourceTree = "<group>";
@@ -5871,8 +5869,7 @@
 		6689416C1F49D4EE0018BED4 /* Actions */ = {
 			isa = PBXGroup;
 			children = (
-				6689416D1F49D5060018BED4 /* WWAction.swift */,
-				6689416E1F49D5060018BED4 /* WWActionData.swift */,
+				6689417A1F49E7210018BED4 /* Action.swift */,
 			);
 			name = Actions;
 			sourceTree = "<group>";
@@ -9684,34 +9681,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				668941811F49F7B90018BED4 /* Mason.swift in Sources */,
+				6689418D1F4A06D80018BED4 /* Troublemaker.swift in Sources */,
 				668941761F49D5340018BED4 /* WWPlayer.swift in Sources */,
+				668941791F49E3E40018BED4 /* GameCharacter.swift in Sources */,
 				660673611F48CEF700FD57BA /* Droplet+Setup.swift in Sources */,
-				6689416F1F49D5060018BED4 /* WWAction.swift in Sources */,
+				6689417D1F49EF910018BED4 /* Copycat.swift in Sources */,
 				OBJ_2284 /* Config+Setup.swift in Sources */,
-				6689416B1F49D4880018BED4 /* WWWitch.swift in Sources */,
+				6689417B1F49E7210018BED4 /* Action.swift in Sources */,
+				668941851F49F8B50018BED4 /* Werewolf.swift in Sources */,
 				6606735D1F48C98C00FD57BA /* UserController.swift in Sources */,
 				666792FE1F47897700C81558 /* GameInfoController.swift in Sources */,
 				668941511F49BCE10018BED4 /* WebSocket+JSON.swift in Sources */,
 				6689414F1F49B5030018BED4 /* Error.swift in Sources */,
 				OBJ_2287 /* PostController.swift in Sources */,
-				668941701F49D5060018BED4 /* WWActionData.swift in Sources */,
 				6606735F1F48CCF500FD57BA /* WebController.swift in Sources */,
-				668941631F49D4880018BED4 /* WWInsomniac.swift in Sources */,
-				668941651F49D4880018BED4 /* WWMinion.swift in Sources */,
-				668941611F49D4880018BED4 /* WWCharacter.swift in Sources */,
+				668941831F49F84C0018BED4 /* Minion.swift in Sources */,
+				668941891F4A032A0018BED4 /* Robber.swift in Sources */,
 				668941531F49BD740018BED4 /* JSONFactory.swift in Sources */,
-				668941681F49D4880018BED4 /* WWSeer.swift in Sources */,
-				668941661F49D4880018BED4 /* WWPI.swift in Sources */,
-				668941691F49D4880018BED4 /* WWTroublemaker.swift in Sources */,
-				668941671F49D4880018BED4 /* WWRobber.swift in Sources */,
+				668941871F4A023D0018BED4 /* ParanormalInvestigator.swift in Sources */,
+				6689418B1F4A04BB0018BED4 /* Seer.swift in Sources */,
 				660673631F48EE5200FD57BA /* Game.swift in Sources */,
 				668941771F49D5340018BED4 /* WWState.swift in Sources */,
-				668941641F49D4880018BED4 /* WWMason.swift in Sources */,
-				668941621F49D4880018BED4 /* WWCopycat.swift in Sources */,
 				6606735B1F48B06A00FD57BA /* User.swift in Sources */,
 				668941751F49D5340018BED4 /* WWGame.swift in Sources */,
-				6689416A1F49D4880018BED4 /* WWWerewolf.swift in Sources */,
+				6689418F1F4A08030018BED4 /* Witch.swift in Sources */,
 				OBJ_2288 /* Post.swift in Sources */,
+				6689417F1F49F76E0018BED4 /* Insomniac.swift in Sources */,
 				666793481F479B0F00C81558 /* SocketController.swift in Sources */,
 				666793001F478B5200C81558 /* GameController.swift in Sources */,
 			);

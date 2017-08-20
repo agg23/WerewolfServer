@@ -9,7 +9,7 @@
 import Foundation
 
 class GameController {
-    let availableCharacters: [WWCharacter.Type] = [WWCopycat.self, WWWerewolf.self, WWWerewolf.self, WWMinion.self, WWMason.self, WWMason.self, WWSeer.self, WWPI.self, WWRobber.self, WWWitch.self, WWTroublemaker.self, WWInsomniac.self]
+    let availableCharacters: [GameCharacter.Type] = [Copycat.self, Werewolf.self, Werewolf.self, Minion.self, Mason.self, Mason.self, Seer.self, ParanormalInvestigator.self, Robber.self, Witch.self, Troublemaker.self, Insomniac.self]
 
     static let instance = GameController()
     let userController = UserController.instance
@@ -71,11 +71,11 @@ class GameController {
 
         let userData = game.users.map { return jsonFactory.makeUser($0, using: game) }
         let charactersInPlay = game.charactersInPlay.map { return jsonFactory.makeCharacterType($0) }
-        let status = game.internalGame.state?.status ?? .nogame
+//        let status = game.internalGame.state?.status ?? .nogame
 
         json["players"] = JSON(userData)
         json["inPlay"] = JSON(charactersInPlay)
-        json["state"] = JSON(status.rawValue)
+//        json["state"] = JSON(status.rawValue)
 
         sendToUsers(json: json, in: game)
     }
