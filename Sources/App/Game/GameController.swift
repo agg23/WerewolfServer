@@ -143,6 +143,46 @@ class GameController {
         sendTo(user: user, json: json)
     }
 
+    // MARK: - User Actions
+
+    func user(_ user: User, selectedType type: Action.SelectionType, selections: [Int]?, rotation: Action.Rotation?) throws {
+        guard let game = user.game, let character = game.assignments[user] else {
+            throw GameController.GameError.userNotInGame
+        }
+
+        guard !character.selectionComplete else {
+            Logger.warning("Received action for user \(user.id) when selection complete")
+            return
+        }
+
+        switch type {
+        case .single:
+            guard let selections = selections, selections.count > 0 else {
+                throw SocketController.ParseError.malformedData("selections")
+            }
+        case .double:
+            guard let selections = selections, selections.count > 1 else {
+                throw SocketController.ParseError.malformedData("selections")
+            }
+        case .rotate:
+            guard rotation != nil else {
+                throw SocketController.ParseError.malformedData("rotation")
+            }
+        }
+
+        let action = Action(type: type, selections: selections ?? [], rotation: rotation)
+
+        game.addAction(action, for: user)
+
+        let characterNeedsUpdate = character.received(action: action, game: game)
+
+        if checkGameStatus(game) {
+            updateAllCharacters(game)
+        } else if characterNeedsUpdate {
+            characterUpdate(for: user, in: game)
+        }
+    }
+
     // MARK: - Communication
 
     func sendToUsers(json: JSON, in game: Game) {

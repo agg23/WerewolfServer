@@ -214,4 +214,21 @@ extension SocketController {
         let _ = gameController.checkGameStatus(game)
         gameController.updateGameStatus(game)
     }
+
+    func selectUserIndexes(json: JSON, socket: WebSocket, user: User) throws {
+        guard let typeString = json["type"]?.string else {
+            throw ParseError.missingData("type")
+        }
+
+        guard let type = Action.SelectionType(rawValue: typeString) else {
+            throw ParseError.malformedData("type")
+        }
+
+        let selectionsJson = json["selections"]?.array
+        let selections = selectionsJson?.flatMap({ return $0.int })
+
+        let rotation = Action.Rotation(rawValue: json["rotation"]?.string ?? "")
+
+        try gameController.user(user, selectedType: type, selections: selections, rotation: rotation)
+    }
 }
