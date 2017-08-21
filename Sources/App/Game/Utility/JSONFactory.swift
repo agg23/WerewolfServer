@@ -30,6 +30,8 @@ class JSONFactory {
             Logger.warning("Ready state for user \(user.id) could not be determined")
         }
 
+        json["isHuman"] = JSON(user.isHuman)
+
         return json
     }
 
