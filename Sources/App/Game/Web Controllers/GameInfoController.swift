@@ -25,6 +25,6 @@ class GameInfoController {
     func viewLog(_ request: Request) throws -> ResponseRepresentable {
         let path = FileManager.default.currentDirectoryPath + "/log.log"
         let url = URL(fileURLWithPath: path)
-        return try String.init(contentsOf: url)
+        return try String(contentsOf: url, encoding: .utf8)
     }
 }
