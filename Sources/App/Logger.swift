@@ -21,6 +21,6 @@ class Logger {
     }
 
     static func error(_ message: String) {
-        droplet?.log.warning(message)
+        droplet?.log.error(message)
     }
 }
