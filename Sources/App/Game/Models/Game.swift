@@ -82,8 +82,8 @@ class Game: Hashable {
     }
 
     func mapCharactersToUsers(characters: [GameCharacter]) {
-        guard characters.count == users.count else {
-            Logger.error("Unequal number of characters and users")
+        guard characters.count >= users.count else {
+            Logger.error("Not enough characters to satisfy users")
             return
         }
 

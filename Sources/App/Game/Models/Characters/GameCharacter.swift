@@ -15,11 +15,11 @@ class GameCharacter: Equatable {
         case inactive
     }
 
-    enum ViewableType {
-        case all
-        case humanOnly
-        case nonHumanOnly
-        case none
+    enum ViewableType: String {
+        case all = "all"
+        case humanOnly = "humanOnly"
+        case nonHumanOnly = "nonHumanOnly"
+        case none = "none"
     }
 
     class var name: String {

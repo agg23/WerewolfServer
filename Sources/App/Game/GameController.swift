@@ -72,7 +72,7 @@ class GameController {
         var updatedState = false
         switch game.state {
         case .lobby:
-            guard game.userReady.contains(where: { return $0.value == false }) else {
+            guard !game.userReady.contains(where: { return $0.value == false }) else {
                 return false
             }
 
@@ -96,7 +96,8 @@ class GameController {
             // Assign characters to users
             game.mapCharactersToUsers(characters: characters)
             // TODO: Finish night updates
-            // TODO: Send each user their allowed selections
+            updateAllCharacters(game)
+
             updatedState = true
         case .starting:
             game.state = .discussion
@@ -123,15 +124,38 @@ class GameController {
         sendToUsers(json: json, in: game)
     }
 
+    func updateAllCharacters(_ game: Game) {
+        for user in game.users {
+            characterUpdate(for: user, in: game)
+        }
+    }
+
+    func characterUpdate(for user: User, in game: Game) {
+        guard let character = game.assignments[user] else {
+            Logger.error("Attempted character update for user without assignment")
+            return
+        }
+
+        var json = JSON()
+        json["command"] = "characterUpdate"
+        json["character"] = jsonFactory.makeCharacter(character)
+
+        sendTo(user: user, json: json)
+    }
+
     // MARK: - Communication
 
     func sendToUsers(json: JSON, in game: Game) {
         for user in game.users where user.isHuman {
-            if let socket = userController.userSockets[user] {
-                socket.send(json: json)
-            } else {
-                // TODO: Handle unable to send to user
-            }
+            sendTo(user: user, json: json)
+        }
+    }
+
+    func sendTo(user: User, json: JSON) {
+        if let socket = userController.userSockets[user] {
+            socket.send(json: json)
+        } else {
+            // TODO: Handle unable to send to user
         }
     }
 

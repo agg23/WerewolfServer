@@ -24,15 +24,6 @@ class JSONFactory {
             json["nickname"] = JSON(nickname)
         }
 
-        let assignment: JSON
-        if let character = game.assignments[user] {
-            assignment = makeCharacter(character)
-        } else {
-            assignment = JSON.null
-        }
-
-        json["assignment"] = assignment
-
         if let ready = game.userReady[user] {
             json["ready"] = JSON(ready)
         } else {
@@ -52,7 +43,21 @@ class JSONFactory {
     }
 
     func makeCharacter(_ character: GameCharacter) -> JSON {
-        // TODO: Fix
-        return JSON.null
+        var json = JSON()
+
+        json["id"] = JSON(character.id)
+        json["name"] = JSON(type(of: character).name)
+
+        var allowedActions = JSON()
+
+        allowedActions["selectableType"] = JSON(character.selectableType.rawValue)
+
+        if character.selectableType != .none {
+            allowedActions["selectionCount"] = JSON(character.selectionComplete ? 0 : character.selectionCount)
+        }
+
+        json["allowedActions"] = allowedActions
+
+        return json
     }
 }
