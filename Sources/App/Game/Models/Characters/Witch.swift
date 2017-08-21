@@ -10,7 +10,7 @@ import Foundation
 
 class Witch: GameCharacter {
     override class var name: String {
-        return "Witch"
+        return "witch"
     }
 
     private var humanPlayerSelect: Bool
