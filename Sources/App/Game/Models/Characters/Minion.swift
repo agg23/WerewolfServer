@@ -10,7 +10,7 @@ import Foundation
 
 class Minion: GameCharacter {
     override class var name: String {
-        return "Minion"
+        return "minion"
     }
 
     required init(id: Int) {

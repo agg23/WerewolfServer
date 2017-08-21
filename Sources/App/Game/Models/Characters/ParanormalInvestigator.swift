@@ -10,7 +10,7 @@ import Foundation
 
 class ParanormalInvestigator: GameCharacter {
     override class var name: String {
-        return "PI"
+        return "pi"
     }
 
     required init(id: Int) {

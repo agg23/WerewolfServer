@@ -10,7 +10,7 @@ import Foundation
 
 class Copycat: GameCharacter {
     override class var name: String {
-        return "Copycat"
+        return "copycat"
     }
 
     private var inheritedCharacter: GameCharacter?

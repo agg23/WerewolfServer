@@ -10,7 +10,7 @@ import Foundation
 
 class Werewolf: GameCharacter {
     override class var name: String {
-        return "Werewolf"
+        return "werewolf"
     }
 
     required init(id: Int) {
