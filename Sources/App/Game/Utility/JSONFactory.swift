@@ -58,6 +58,8 @@ class JSONFactory {
             allowedActions["selectionCount"] = JSON(character.selectionComplete ? 0 : character.selectionCount)
         }
 
+        allowedActions["selectionType"] = JSON(character.selectableType.rawValue)
+
         json["allowedActions"] = allowedActions
 
         return json
