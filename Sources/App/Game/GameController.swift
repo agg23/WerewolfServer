@@ -99,13 +99,63 @@ class GameController {
             updateAllCharacters(game)
 
             updatedState = true
+
+            // To allow instant transition to discussion
+            _ = checkGameStatus(game)
         case .starting:
             game.state = .discussion
             updatedState = checkGameStatus(game)
         case .night:
-            break
+            guard !game.assignments.filter({ $0.key.isHuman }).contains(where: { !$0.value.selectionComplete }) else {
+                return false
+            }
+
+            // Mark all users as unready, for exiting discussion
+            for user in game.users {
+                game.unreadyUser(user)
+            }
+
+            Logger.info("Game \(game.id) entering discussion")
+
+            game.state = .discussion
+
+            // Perform character actions
+            let sortedAssignments = game.assignments.sorted(by: { (first, second) -> Bool in
+                return first.value.turnOrder < second.value.turnOrder
+            })
+
+            for assignment in sortedAssignments {
+                guard let actions = game.actions[assignment.key] else {
+                    continue
+                }
+
+                assignment.value.perform(actions: actions, with: game)
+            }
+
+            for assignment in game.assignments {
+                // TODO: Remove?
+                assignment.value.beginDiscussion(with: game)
+            }
+
+            let assignmentsNeedingUpdates = game.assignments.filter({ return $0.value.orderType == .last })
+
+            for assignment in assignmentsNeedingUpdates {
+                characterUpdate(for: assignment.key, in: game)
+            }
+
+            updatedState = true
         case .discussion:
-            break
+            guard !game.userReady.contains(where: { return $0.value == false }) else {
+                return false
+            }
+
+            Logger.info("Game \(game.id) entering lobby")
+
+            game.state = .lobby
+
+            updateAllCharacters(game)
+
+            updatedState = true
         }
 
         return updatedState

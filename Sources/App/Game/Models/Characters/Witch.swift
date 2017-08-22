@@ -29,14 +29,15 @@ class Witch: GameCharacter {
         self.selectionCount = 1
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
-        guard action.selections.count > 1 else {
+    override func perform(actions: [Action], with game: Game) {
+        guard let lastAction = actions.last,
+            lastAction.selections.count > 1 else {
             Logger.warning("Not two WWActionData for Witch")
             return
         }
 
-        let firstIndex = action.selections[0]
-        let secondIndex = action.selections[1]
+        let firstIndex = lastAction.selections[0]
+        let secondIndex = lastAction.selections[1]
 
         // Nonhuman card
         game.swap(firstUser: firstIndex, secondUser: secondIndex)

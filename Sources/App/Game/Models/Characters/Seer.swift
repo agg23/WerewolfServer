@@ -25,7 +25,7 @@ class Seer: GameCharacter {
         self.selectionCount = 2
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
+    override func perform(actions: [Action], with game: Game) {
         // Overridden Seer action
     }
 

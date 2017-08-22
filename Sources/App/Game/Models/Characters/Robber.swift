@@ -26,13 +26,14 @@ class Robber: GameCharacter {
         self.selectionComplete = true
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
-        guard action.selections.count > 0 else {
+    override func perform(actions: [Action], with game: Game) {
+        guard let lastAction = actions.last,
+            lastAction.selections.count > 0 else {
             Logger.warning("Invalid Action for Robber")
             return
         }
 
-        let index = action.selections[0]
+        let index = lastAction.selections[0]
 
         guard game.users.count > index else {
             Logger.warning("Invalid selected user for Robber")

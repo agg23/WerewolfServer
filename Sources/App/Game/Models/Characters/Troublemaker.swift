@@ -25,14 +25,15 @@ class Troublemaker: GameCharacter {
         self.selectionCount = 2
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
-        guard action.selections.count > 1 else {
-            Logger.warning("Invalid WWActionData for Troublemaker")
+    override func perform(actions: [Action], with game: Game) {
+        guard let lastAction = actions.last,
+            lastAction.selections.count > 1 else {
+            Logger.warning("Invalid Action for Troublemaker")
             return
         }
 
-        let firstIndex = action.selections[0]
-        let secondIndex = action.selections[1]
+        let firstIndex = lastAction.selections[0]
+        let secondIndex = lastAction.selections[1]
         
         game.swap(firstUser: firstIndex, secondUser: secondIndex)
     }

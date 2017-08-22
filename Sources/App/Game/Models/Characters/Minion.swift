@@ -31,7 +31,7 @@ class Minion: GameCharacter {
         self.selectionComplete = true
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
+    override func perform(actions: [Action], with game: Game) {
         // Overridden Minion action
     }
 }

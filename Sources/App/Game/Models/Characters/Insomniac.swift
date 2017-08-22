@@ -30,4 +30,8 @@ class Insomniac: GameCharacter {
         // For some reason necessary
         self.selectionComplete = true
     }
+
+    override func perform(actions: [Action], with game: Game) {
+        // Overridden Insomniac action
+    }
 }

@@ -32,7 +32,7 @@ class GameCharacter: Equatable {
 
     var selectableType: ViewableType = .none
 
-    var turnOrder: Int?
+    var turnOrder: Int = 0
 
     var canSelectSelf: Bool = false
 
@@ -52,7 +52,7 @@ class GameCharacter: Equatable {
     }
 
     /// Interprets the provided Action (typically created from the GUI) and mutates the Game state
-    func perform(action: Action, with game: Game, playerIndex: Int) {
+    func perform(actions: [Action], with game: Game) {
         Logger.warning("Default action performed. Nothing was changed")
     }
 
@@ -63,7 +63,7 @@ class GameCharacter: Equatable {
     }
 
     /// Performs any changes dictated by the current WWState before entering discussion, such as Insomniac updating their roll
-    public func beginDiscussion(with game: Game, playerIndex: Int) {
+    public func beginDiscussion(with game: Game) {
 
     }
 

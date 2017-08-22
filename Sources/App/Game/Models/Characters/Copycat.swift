@@ -28,13 +28,13 @@ class Copycat: GameCharacter {
         self.selectionComplete = true
     }
 
-    override func perform(action: Action, with game: Game, playerIndex: Int) {
+    override func perform(actions: [Action], with game: Game) {
         guard let character = self.inheritedCharacter else {
             Logger.warning("Invalid inherited character for Copycat")
             return
         }
 
-        character.perform(action: action, with: game, playerIndex: playerIndex)
+        character.perform(actions: actions, with: game)
     }
 
     override func received(action: Action, game: Game) -> Bool {
