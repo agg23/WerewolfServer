@@ -91,10 +91,13 @@ class SocketController {
 
         case "ready":
             try markUserReady(socket: socket, user: user)
-            return nil
+        case "select":
+            try selectUserIndexes(json: json, socket: socket, user: user)
         default:
             throw ParseError.invalidCommand
         }
+
+        return nil
     }
 }
 
