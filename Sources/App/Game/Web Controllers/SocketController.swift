@@ -228,7 +228,14 @@ extension SocketController {
         }
 
         let selectionsJson = json["selections"]?.array
-        let selections = selectionsJson?.flatMap({ return $0.int })
+        let selections = try selectionsJson?.map({(value: JSON) -> User in
+            if let id = value.int,
+                let user = user.game?.users[id] {
+                return user
+            } else {
+                throw ParseError.malformedData("selections")
+            }
+        })
 
         let rotation = Action.Rotation(rawValue: json["rotation"]?.string ?? "")
 

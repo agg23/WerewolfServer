@@ -27,8 +27,7 @@ class Game: Hashable {
 
     var charactersInPlay: [GameCharacter.Type] = []
 
-    var users: [User] = []
-    var userIndexes: Set<Int> = []
+    var users: [Int: User] = [:]
 
     var userReady: [User: Bool] = [:]
 
@@ -44,17 +43,17 @@ class Game: Hashable {
     }
 
     func registerUser(_ user: User) {
-        users.append(user)
+        users[user.id] = user
 
-        userReady[user] = false
+        if user.isHuman {
+            userReady[user] = false
+        }
 
         user.game = self
     }
 
     func removeUser(_ user: User) {
-        if let index = users.index(of: user) {
-            users.remove(at: index)
-        }
+        users.removeValue(forKey: user.id)
 
         userReady.removeValue(forKey: user)
 
@@ -83,10 +82,7 @@ class Game: Hashable {
 
     // MARK: - Utility
 
-    func swap(firstUser first: Int, secondUser second: Int) {
-        let firstUser = users[first]
-        let secondUser = users[second]
-
+    func swap(firstUser: User, secondUser: User) {
         let temp = assignments[firstUser]
         let temp2 = assignments[secondUser]
 
@@ -100,7 +96,9 @@ class Game: Hashable {
             return
         }
 
-        for (i, user) in zip(users.indices, users) {
+        let usersArray = Array(users.values)
+
+        for (i, user) in zip(usersArray.indices, usersArray) {
             let character = characters[i]
             assignments[user] = character
         }

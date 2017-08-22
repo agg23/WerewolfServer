@@ -33,14 +33,7 @@ class Robber: GameCharacter {
             return
         }
 
-        let index = lastAction.selections[0]
-
-        guard game.users.count > index else {
-            Logger.warning("Invalid selected user for Robber")
-            return
-        }
-
-        let user = game.users[index]
+        let user = lastAction.selections[0]
 
         guard let newCharacter = game.assignments[user] else {
             Logger.error("Character assignment does not exist for user")
@@ -64,21 +57,14 @@ class Robber: GameCharacter {
             return false
         }
 
-        let index = action.selections[0]
-
-        guard game.users.count > index else {
-            Logger.warning("Invalid selected user for Robber")
-            return false
-        }
-
-        let user = game.users[index]
+        let user = action.selections[0]
 
         guard let character = game.assignments[user] else {
             Logger.error("Character assignment does not exist for user")
             return false
         }
 
-        self.seenAssignments[index] = type(of: character)
+        self.seenAssignments[user] = type(of: character)
 
         self.selectionComplete = true
         

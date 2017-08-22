@@ -35,7 +35,7 @@ class Werewolf: GameCharacter {
 
         var werewolfCount = 0
 
-        for user in game.users {
+        for user in game.users.values {
             if user.isHuman,
                 let character = game.assignments[user],
                 character is Werewolf {
@@ -58,21 +58,14 @@ class Werewolf: GameCharacter {
             return false
         }
 
-        let index = action.selections[0]
-
-        guard game.users.count > index else {
-            Logger.warning("Invalid selected user for Werewolf")
-            return false
-        }
-
-        let user = game.users[index]
+        let user = action.selections[0]
 
         guard let character = game.assignments[user] else {
             Logger.error("Character assignment does not exist for user")
             return false
         }
 
-        self.seenAssignments[index] = type(of: character)
+        self.seenAssignments[user] = type(of: character)
 
         self.selectionComplete = true
         

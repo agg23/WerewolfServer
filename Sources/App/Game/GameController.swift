@@ -84,10 +84,8 @@ class GameController {
             var nonHumanUsers: [User] = []
 
             for _ in 0 ..< game.nonHumanCount {
-                nonHumanUsers.append(userController.createUser(isHuman: false))
+                game.registerUser(userController.createUser(isHuman: false))
             }
-
-            game.users.append(contentsOf: nonHumanUsers)
 
             // Shuffle characters and instantiate them
             let shuffledCharacters = game.charactersInPlay.shuffled()
@@ -111,7 +109,7 @@ class GameController {
             }
 
             // Mark all users as unready, for exiting discussion
-            for user in game.users {
+            for user in game.users.values {
                 game.unreadyUser(user)
             }
 
@@ -164,7 +162,7 @@ class GameController {
     func updateGameStatus(_ game: Game) {
         var json = jsonFactory.makeResponse("gameUpdate")
 
-        let userData = game.users.map { return jsonFactory.makeUser($0, using: game) }
+        let userData = game.users.map { return jsonFactory.makeUser($0.value, using: game) }
         let charactersInPlay = game.charactersInPlay.map { return jsonFactory.makeCharacterType($0) }
 
         json["players"] = JSON(userData)
@@ -175,7 +173,7 @@ class GameController {
     }
 
     func updateAllCharacters(_ game: Game) {
-        for user in game.users {
+        for user in game.users.values {
             characterUpdate(for: user, in: game)
         }
     }
@@ -195,7 +193,7 @@ class GameController {
 
     // MARK: - User Actions
 
-    func user(_ user: User, selectedType type: Action.SelectionType, selections: [Int]?, rotation: Action.Rotation?) throws {
+    func user(_ user: User, selectedType type: Action.SelectionType, selections: [User]?, rotation: Action.Rotation?) throws {
         guard let game = user.game, let character = game.assignments[user] else {
             throw GameController.GameError.userNotInGame
         }
@@ -236,7 +234,7 @@ class GameController {
     // MARK: - Communication
 
     func sendToUsers(json: JSON, in game: Game) {
-        for user in game.users where user.isHuman {
+        for user in game.users.values where user.isHuman {
             sendTo(user: user, json: json)
         }
     }

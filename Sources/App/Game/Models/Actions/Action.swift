@@ -22,12 +22,12 @@ class Action {
 
     var type: SelectionType
 
-    /// The indexes selected by the action
-    var selections: [Int] = []
+    /// The users selected by the action
+    var selections: [User] = []
 
     var rotation: Rotation?
 
-    init(type: SelectionType, selections: [Int], rotation: Rotation?) {
+    init(type: SelectionType, selections: [User], rotation: Rotation?) {
         self.type = type
         self.selections = selections
         self.rotation = rotation

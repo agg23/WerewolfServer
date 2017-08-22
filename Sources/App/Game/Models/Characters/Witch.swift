@@ -60,21 +60,14 @@ class Witch: GameCharacter {
                 return !temp
             }
 
-            let index = action.selections[0]
-
-            guard game.users.count > index else {
-                Logger.warning("Invalid selected user for Witch")
-                return false
-            }
-
-            let user = game.users[index]
+            let user = action.selections[0]
 
             guard let character = game.assignments[user] else {
                 Logger.error("Character assignment does not exist for user")
                 return false
             }
 
-            seenAssignments[index] = type(of: character)
+            seenAssignments[user] = type(of: character)
         } else if !selectionComplete {
             selectionComplete = true
             return true

@@ -36,16 +36,8 @@ class Seer: GameCharacter {
             return false
         }
 
-        let firstIndex = action.selections[0]
-        let secondIndex = action.selections[1]
-
-        guard game.users.count > max(firstIndex, secondIndex) else {
-            Logger.warning("Invalid selected user(s) for Seer")
-            return false
-        }
-
-        let firstUser = game.users[firstIndex]
-        let secondUser = game.users[secondIndex]
+        let firstUser = action.selections[0]
+        let secondUser = action.selections[1]
 
         guard let firstCharacter = game.assignments[firstUser],
             let secondCharacter = game.assignments[secondUser] else {
@@ -53,8 +45,8 @@ class Seer: GameCharacter {
             return false
         }
 
-        self.seenAssignments[firstIndex] = type(of: firstCharacter)
-        self.seenAssignments[secondIndex] = type(of: secondCharacter)
+        self.seenAssignments[firstUser] = type(of: firstCharacter)
+        self.seenAssignments[secondUser] = type(of: secondCharacter)
 
         self.selectionComplete = true
         

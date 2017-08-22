@@ -45,7 +45,7 @@ class GameCharacter: Equatable {
     var selectionComplete: Bool = true
 
     /// Mapping from character index to character type seen
-    var seenAssignments: [Int: GameCharacter.Type] = [:]
+    var seenAssignments: [User: GameCharacter.Type] = [:]
 
     required init(id: Int) {
         self.id = id

@@ -43,29 +43,23 @@ class Copycat: GameCharacter {
             return false
         }
 
-        let index = action.selections[0]
-
         if let inheritedCharacter = self.inheritedCharacter {
             let received = inheritedCharacter.received(action: action, game: game)
             updateCharacterProperties()
             return received
         } else {
             // Set new character
-            if game.users.count > index {
-                let user = game.users[index]
+            let user = action.selections[0]
 
-                guard let character = game.assignments[user] else {
-                    Logger.error("Character assignment does not exist for user")
-                    return false
-                }
-                self.seenAssignments[index] = type(of: character)
-
-                self.inheritedCharacter = character
-
-                updateCharacterProperties()
-            } else {
-                Logger.warning("Invalid selected character for Copycat")
+            guard let character = game.assignments[user] else {
+                Logger.error("Character assignment does not exist for user")
+                return false
             }
+            self.seenAssignments[user] = type(of: character)
+
+            self.inheritedCharacter = character
+
+            updateCharacterProperties()
         }
 
         return true
