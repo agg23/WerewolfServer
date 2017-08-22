@@ -81,8 +81,6 @@ class GameController {
             game.state = .night
 
             // Create non-player users
-            var nonHumanUsers: [User] = []
-
             for _ in 0 ..< game.nonHumanCount {
                 game.registerUser(userController.createUser(isHuman: false))
             }
@@ -93,6 +91,15 @@ class GameController {
 
             // Assign characters to users
             game.mapCharactersToUsers(characters: characters)
+
+            let assignments = game.assignments.map({ (value) -> JSON in return jsonFactory.makeCharacterAssignment(for: value.key, with: value.value) })
+            do {
+                let bytes = try JSON(assignments).makeBytes()
+                Logger.info(bytes.makeString())
+            } catch {
+                // Ignore failure
+            }
+
             // TODO: Finish night updates
             updateAllCharacters(game)
 

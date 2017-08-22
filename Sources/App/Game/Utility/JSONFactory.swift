@@ -75,4 +75,13 @@ class JSONFactory {
 
         return JSON(assignments)
     }
+
+    func makeCharacterAssignment(for user: User, with character: GameCharacter) -> JSON {
+        var json = JSON()
+        
+        json["id"] = JSON(user.id)
+        json["character"] = JSON(type(of: character).name)
+
+        return json
+    }
 }
