@@ -23,7 +23,7 @@ class Robber: GameCharacter {
         self.defaultVisible = []
         self.defaultVisibleViewableType = .none
         self.selectionCount = 1
-        self.selectionComplete = true
+        self.selectionComplete = false
     }
 
     override func perform(actions: [Action], with game: Game) {

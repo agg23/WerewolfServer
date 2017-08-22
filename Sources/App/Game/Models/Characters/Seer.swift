@@ -23,6 +23,7 @@ class Seer: GameCharacter {
         self.defaultVisible = []
         self.defaultVisibleViewableType = .none
         self.selectionCount = 2
+        self.selectionComplete = false
     }
 
     override func perform(actions: [Action], with game: Game) {
