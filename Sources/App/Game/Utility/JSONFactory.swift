@@ -64,4 +64,15 @@ class JSONFactory {
 
         return json
     }
+
+    func makeSeenAssignments(_ character: GameCharacter) -> JSON {
+        let assignments = character.seenAssignments.map { (value) -> JSON in
+            var assignmentJson = JSON()
+            assignmentJson["id"] = JSON(value.key.id)
+            assignmentJson["character"] = JSON(value.value.name)
+            return assignmentJson
+        }
+
+        return JSON(assignments)
+    }
 }

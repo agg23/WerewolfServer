@@ -187,6 +187,7 @@ class GameController {
         var json = JSON()
         json["command"] = "characterUpdate"
         json["character"] = jsonFactory.makeCharacter(character)
+        json["seenAssignments"] = jsonFactory.makeSeenAssignments(character)
 
         sendTo(user: user, json: json)
     }
