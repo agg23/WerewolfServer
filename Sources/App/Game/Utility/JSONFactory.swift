@@ -20,9 +20,7 @@ class JSONFactory {
         var json = JSON()
 
         json["id"] = JSON(user.id)
-        if let nickname = user.nickname {
-            json["nickname"] = JSON(nickname)
-        }
+        json["nickname"] = JSON(user.nickname)
 
         if let ready = game.userReady[user] {
             json["ready"] = JSON(ready)

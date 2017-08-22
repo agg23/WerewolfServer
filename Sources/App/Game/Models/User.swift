@@ -11,7 +11,7 @@ import FluentProvider
 
 class User: Hashable {
     let id: Int
-    var nickname: String?
+    var nickname: String
 
     let isHuman: Bool
 
@@ -20,6 +20,8 @@ class User: Hashable {
     init(id: Int, isHuman: Bool) {
         self.id = id
         self.isHuman = isHuman
+
+        self.nickname = isHuman ? "User \(id)" : "Nonhuman \(id)"
     }
 
     // MARK: - Hashable

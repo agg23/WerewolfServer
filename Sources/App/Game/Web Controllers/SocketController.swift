@@ -81,7 +81,7 @@ class SocketController {
         switch command {
         // User
         case "setNickname":
-            return setNickname(json: json, socket: socket, user: user)
+            return try setNickname(json: json, socket: socket, user: user)
 
         // Game
         case "hostGame":
@@ -139,8 +139,10 @@ extension SocketController {
 
     // MARK: - User Functions
 
-    func setNickname(json: JSON, socket: WebSocket, user: User) -> JSON? {
-        let nickname = json["nickname"]?.string
+    func setNickname(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
+        guard let nickname = json["nickname"]?.string else {
+            throw ParseError.missingData("nickname")
+        }
         user.nickname = nickname
 
         if let game = user.game {
