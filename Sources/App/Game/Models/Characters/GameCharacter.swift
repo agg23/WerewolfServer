@@ -9,6 +9,12 @@
 import Foundation
 
 class GameCharacter: Equatable {
+    enum UpdateType {
+        case full
+        case hidden
+        case none
+    }
+
     enum OrderType {
         case concurrent
         case last
@@ -68,10 +74,10 @@ class GameCharacter: Equatable {
     }
 
     /// Performs any necessary changes based on the provided Action. Returns true if updated state needs to be sent to the owning client
-    public func received(action: Action, game: Game) -> Bool {
+    public func received(action: Action, game: Game) -> UpdateType {
         selectionComplete = true
         
-        return true
+        return .hidden
     }
 
     static func ==(lhs: GameCharacter, rhs: GameCharacter) -> Bool {

@@ -51,32 +51,33 @@ class Witch: GameCharacter {
         selectableType = .nonHumanOnly
     }
 
-    override func received(action: Action, game: Game) -> Bool {
+    override func received(action: Action, game: Game) -> UpdateType {
         let temp = humanPlayerSelect
 
         if !humanPlayerSelect {
             guard action.selections.count > 0 else {
                 Logger.warning("Invalid Action for Witch")
-                return !temp
+                // TODO: What?
+                return .hidden
             }
 
             let user = action.selections[0]
 
             guard let character = game.assignments[user] else {
                 Logger.error("Character assignment does not exist for user")
-                return false
+                return .none
             }
 
             seenAssignments[user] = type(of: character)
         } else if !selectionComplete {
             selectionComplete = true
-            return true
+            return .hidden
         }
         
         humanPlayerSelect = true
         
         selectableType = .humanOnly
         
-        return !temp
+        return !temp ? .hidden : .none
     }
 }

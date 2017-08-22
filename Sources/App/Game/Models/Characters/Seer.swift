@@ -30,10 +30,10 @@ class Seer: GameCharacter {
         // Overridden Seer action
     }
 
-    override func received(action: Action, game: Game) -> Bool {
+    override func received(action: Action, game: Game) -> UpdateType {
         guard action.selections.count > 1 else {
             Logger.warning("Invalid Action for Seer")
-            return false
+            return .none
         }
 
         let firstUser = action.selections[0]
@@ -42,7 +42,7 @@ class Seer: GameCharacter {
         guard let firstCharacter = game.assignments[firstUser],
             let secondCharacter = game.assignments[secondUser] else {
             Logger.error("Character assignments do not exist for user")
-            return false
+            return .none
         }
 
         self.seenAssignments[firstUser] = type(of: firstCharacter)
@@ -50,6 +50,6 @@ class Seer: GameCharacter {
 
         self.selectionComplete = true
         
-        return true
+        return .hidden
     }
 }

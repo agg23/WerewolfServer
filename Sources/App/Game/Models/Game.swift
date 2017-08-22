@@ -32,6 +32,7 @@ class Game: Hashable {
     var userReady: [User: Bool] = [:]
 
     var assignments: [User: GameCharacter] = [:]
+    var startingAssignments: [User: GameCharacter] = [:]
     var actions: [User: [Action]] = [:]
 
     private var lowestAvailableId: Int = 0
@@ -102,6 +103,8 @@ class Game: Hashable {
             let character = characters[i]
             assignments[user] = character
         }
+
+        startingAssignments = assignments
     }
 
     func user(for character: GameCharacter) -> User? {

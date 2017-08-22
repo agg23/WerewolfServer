@@ -52,23 +52,23 @@ class Werewolf: GameCharacter {
         }
     }
 
-    override func received(action: Action, game: Game) -> Bool {
+    override func received(action: Action, game: Game) -> UpdateType {
         guard action.selections.count > 0 else {
             Logger.warning("Invalid Action for Werewolf")
-            return false
+            return .none
         }
 
         let user = action.selections[0]
 
         guard let character = game.assignments[user] else {
             Logger.error("Character assignment does not exist for user")
-            return false
+            return .none
         }
 
         self.seenAssignments[user] = type(of: character)
 
         self.selectionComplete = true
         
-        return true
+        return .hidden
     }
 }

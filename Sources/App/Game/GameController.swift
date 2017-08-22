@@ -67,13 +67,13 @@ class GameController {
     // MARK: - Status
 
     /// - returns: True if game update should be pushed to clients
-    func checkGameStatus(_ game: Game) -> Bool {
+    func checkGameStatus(_ game: Game) -> GameCharacter.UpdateType {
         // TODO: Handle all states
-        var updatedState = false
+        var updateAll: GameCharacter.UpdateType = .none
         switch game.state {
         case .lobby:
             guard !game.userReady.contains(where: { return $0.value == false }) else {
-                return false
+                return .none
             }
 
             Logger.info("Game \(game.id) entering night")
@@ -100,19 +100,17 @@ class GameController {
                 // Ignore failure
             }
 
-            // TODO: Finish night updates
-            updateAllCharacters(game)
-
-            updatedState = true
+            updateAll = .full
 
             // To allow instant transition to discussion
+            // TODO: Fix
             _ = checkGameStatus(game)
         case .starting:
             game.state = .discussion
-            updatedState = checkGameStatus(game)
+            updateAll = checkGameStatus(game)
         case .night:
             guard !game.assignments.filter({ $0.key.isHuman }).contains(where: { !$0.value.selectionComplete }) else {
-                return false
+                return .none
             }
 
             // Mark all users as unready, for exiting discussion
@@ -148,22 +146,20 @@ class GameController {
                 characterUpdate(for: assignment.key, in: game)
             }
 
-            updatedState = true
+            updateAll = .hidden
         case .discussion:
             guard !game.userReady.contains(where: { return $0.value == false }) else {
-                return false
+                return .none
             }
 
             Logger.info("Game \(game.id) entering lobby")
 
             game.state = .lobby
 
-            updateAllCharacters(game)
-
-            updatedState = true
+            updateAll = .full
         }
 
-        return updatedState
+        return updateAll
     }
 
     func updateGameStatus(_ game: Game) {
@@ -179,9 +175,13 @@ class GameController {
         sendToUsers(json: json, in: game)
     }
 
-    func updateAllCharacters(_ game: Game) {
+    func updateAllCharacters(_ game: Game, type: GameCharacter.UpdateType) {
         for user in game.users.values {
-            characterUpdate(for: user, in: game)
+            if type == .full {
+                characterUpdate(for: user, in: game)
+            } else {
+                hiddenCharacterUpdate(for: user, in: game)
+            }
         }
     }
 
@@ -194,6 +194,21 @@ class GameController {
         var json = JSON()
         json["command"] = "characterUpdate"
         json["character"] = jsonFactory.makeCharacter(character)
+        json["seenAssignments"] = jsonFactory.makeSeenAssignments(character)
+
+        sendTo(user: user, json: json)
+    }
+
+    func hiddenCharacterUpdate(for user: User, in game: Game) {
+        guard let character = game.assignments[user],
+            let startingCharacter = game.startingAssignments[user] else {
+            Logger.error("Attempted character update for user without assignment")
+            return
+        }
+
+        var json = JSON()
+        json["command"] = "characterUpdate"
+        json["character"] = jsonFactory.makeCharacter(startingCharacter)
         json["seenAssignments"] = jsonFactory.makeSeenAssignments(character)
 
         sendTo(user: user, json: json)
@@ -232,10 +247,14 @@ class GameController {
 
         let characterNeedsUpdate = character.received(action: action, game: game)
 
-        if checkGameStatus(game) {
-            updateAllCharacters(game)
-        } else if characterNeedsUpdate {
+        let updateAll = checkGameStatus(game)
+
+        if updateAll != .none {
+            updateAllCharacters(game, type: updateAll)
+        } else if characterNeedsUpdate == .full {
             characterUpdate(for: user, in: game)
+        } else if characterNeedsUpdate == .hidden {
+            hiddenCharacterUpdate(for: user, in: game)
         }
     }
 
