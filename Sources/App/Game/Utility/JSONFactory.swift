@@ -26,7 +26,7 @@ class JSONFactory {
 
         if let ready = game.userReady[user] {
             json["ready"] = JSON(ready)
-        } else {
+        } else if user.isHuman {
             Logger.warning("Ready state for user \(user.id) could not be determined")
         }
 
