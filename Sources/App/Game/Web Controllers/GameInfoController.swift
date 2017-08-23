@@ -25,6 +25,22 @@ class GameInfoController {
     func viewLog(_ request: Request) throws -> ResponseRepresentable {
         let path = FileManager.default.currentDirectoryPath + "/log.log"
         let url = URL(fileURLWithPath: path)
-        return try String(contentsOf: url, encoding: .utf8)
+
+        var string = try String(contentsOf: url, encoding: .utf8)
+
+        string = string.replacingOccurrences(of: "[38;5;38m", with: "<font color=\"blue\">")
+        string = string.replacingOccurrences(of: "[38;5;178m", with: "<font color=\"yellow\">")
+        string = string.replacingOccurrences(of: "[38;5;197m", with: "<font color=\"red\">")
+        string = string.replacingOccurrences(of: "[0m", with: "</font>")
+
+        string = "<html><body>" + string + "</body></html>"
+
+        var finalString = ""
+
+        string.enumerateLines { (line, _) in
+            finalString += "<p>" + line + "</p>"
+        }
+
+        return Response(status: Status.init(statusCode: 200), body: finalString)
     }
 }
