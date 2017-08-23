@@ -67,14 +67,14 @@ class GameController {
 
     // MARK: - Status
 
-    /// - returns: True if game update should be pushed to clients
-    func checkGameStatus(_ game: Game) -> GameCharacter.UpdateType {
-        // TODO: Handle all states
-        var updateAll: GameCharacter.UpdateType = .none
+    /// - returns: True if game status update should be pushed to clients
+    func checkGameStatus(_ game: Game) -> Bool {
+        let startingGameState = game.state
+
         switch game.state {
         case .lobby:
             guard !game.userReady.contains(where: { return $0.value == false }) else {
-                return .none
+                return false
             }
 
             Logger.info("Game \(game.id) entering night")
@@ -112,8 +112,6 @@ class GameController {
                 // Ignore failure
             }
 
-            updateAll = .full
-
             updateAllCharacters(game, type: .full)
 
             // To allow instant transition to discussion
@@ -121,10 +119,10 @@ class GameController {
             _ = checkGameStatus(game)
         case .starting:
             game.state = .discussion
-            updateAll = checkGameStatus(game)
+            _ = checkGameStatus(game)
         case .night:
             guard !game.assignments.filter({ $0.key.isHuman }).contains(where: { !$0.value.selectionComplete }) else {
-                return .none
+                return false
             }
 
             // Mark all users as unready, for exiting discussion
@@ -159,21 +157,17 @@ class GameController {
             for assignment in assignmentsNeedingUpdates {
                 characterUpdate(for: assignment.key, in: game)
             }
-
-            updateAll = .hidden
         case .discussion:
             guard !game.userReady.contains(where: { return $0.value == false }) else {
-                return .none
+                return false
             }
 
             Logger.info("Game \(game.id) entering lobby")
 
             game.state = .lobby
-
-            updateAll = .full
         }
 
-        return updateAll
+        return game.state != startingGameState
     }
 
     func updateGameStatus(_ game: Game) {
@@ -260,11 +254,13 @@ class GameController {
 
         let characterNeedsUpdate = character.received(action: action, user: user, game: game)
 
-        let updateAll = checkGameStatus(game)
+        let shouldUpdateGameStatus = checkGameStatus(game)
 
-        if updateAll != .none {
-            updateAllCharacters(game, type: updateAll)
-        } else if characterNeedsUpdate == .full {
+        if shouldUpdateGameStatus {
+            updateGameStatus(game)
+        }
+
+        if characterNeedsUpdate == .full {
             characterUpdate(for: user, in: game)
         } else if characterNeedsUpdate == .hidden {
             hiddenCharacterUpdate(for: user, in: game)
