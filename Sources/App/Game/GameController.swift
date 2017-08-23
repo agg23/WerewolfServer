@@ -267,6 +267,7 @@ class GameController {
         }
 
         // Update all defaultviewables
+        // Should be fine, since only selections are happening at this point. No changes are actually made, so no data will be leaked
         for assignment in game.assignments where assignment.value != character {
             let characterType = type(of: character)
             if checkDefaultViewable(assignment.value.defaultVisible, character: character, on: user, with: assignment.value.defaultVisibleViewableType) {

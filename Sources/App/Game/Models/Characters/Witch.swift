@@ -13,10 +13,10 @@ class Witch: GameCharacter {
         return "witch"
     }
 
-    private var humanPlayerSelect: Bool
+    private var humanPlayerSelected: Bool
 
     required init(id: Int) {
-        self.humanPlayerSelect = false
+        self.humanPlayerSelected = false
         
         super.init(id: id)
 
@@ -33,28 +33,28 @@ class Witch: GameCharacter {
     override func perform(actions: [Action], with game: Game) {
         guard let lastAction = actions.last,
             lastAction.selections.count > 1 else {
-            Logger.warning("Not two WWActionData for Witch")
+            Logger.warning("Not two Actions for Witch")
             return
         }
 
-        let firstIndex = lastAction.selections[0]
-        let secondIndex = lastAction.selections[1]
+        let firstUser = lastAction.selections[0]
+        let secondUser = lastAction.selections[1]
 
         // Nonhuman card
-        game.swap(firstUser: firstIndex, secondUser: secondIndex)
+        game.swap(firstUser: firstUser, secondUser: secondUser)
     }
 
     override func beginNight(with game: Game) {
         super.beginNight(with: game)
-        humanPlayerSelect = false
+        humanPlayerSelected = false
 
         selectableType = .nonHumanOnly
     }
 
     override func received(action: Action, user: User, game: Game) -> UpdateType {
-        let temp = humanPlayerSelect
+        let temp = humanPlayerSelected
 
-        if !humanPlayerSelect {
+        if !humanPlayerSelected {
             guard action.selections.count > 0 else {
                 Logger.warning("Invalid Action for Witch")
                 // TODO: What?
@@ -74,7 +74,7 @@ class Witch: GameCharacter {
             return .hidden
         }
         
-        humanPlayerSelect = true
+        humanPlayerSelected = true
         
         selectableType = .humanOnly
         

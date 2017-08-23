@@ -33,17 +33,19 @@ class Werewolf: GameCharacter {
     override func beginNight(with game: Game) {
         super.beginNight(with: game)
 
-        var werewolfCount = 0
+        var soloWerewolf = true
 
         for user in game.users.values {
             if user.isHuman,
                 let character = game.assignments[user],
+                character != self,
                 character is Werewolf {
-                werewolfCount += 1
+                soloWerewolf = false
+                break
             }
         }
 
-        if werewolfCount == 1 {
+        if soloWerewolf {
             self.selectionCount = 1
             self.selectionComplete = false
         } else {
