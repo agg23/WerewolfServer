@@ -63,7 +63,7 @@ class Witch: GameCharacter {
 
             let selectedUser = action.selections[0]
 
-            guard let character = game.assignments[user] else {
+            guard let character = game.assignments[selectedUser] else {
                 Logger.error("Character assignment does not exist for user")
                 return .none
             }

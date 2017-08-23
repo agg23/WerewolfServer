@@ -49,13 +49,13 @@ class Copycat: GameCharacter {
             return received
         } else {
             // Set new character
-            let newUser = action.selections[0]
+            let selectedUser = action.selections[0]
 
-            guard let character = game.assignments[user] else {
+            guard let character = game.assignments[selectedUser] else {
                 Logger.error("Character assignment does not exist for user")
                 return .none
             }
-            user.seenAssignments[newUser] = type(of: character)
+            user.seenAssignments[selectedUser] = type(of: character)
 
             self.inheritedCharacter = character
 
