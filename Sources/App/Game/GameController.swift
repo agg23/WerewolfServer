@@ -104,6 +104,8 @@ class GameController {
 
             updateAll = .full
 
+            updateAllCharacters(game, type: .full)
+
             // To allow instant transition to discussion
             // TODO: Fix
             _ = checkGameStatus(game)
