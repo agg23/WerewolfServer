@@ -15,6 +15,9 @@ class User: Hashable {
 
     let isHuman: Bool
 
+    /// Mapping from user to character type seen
+    var seenAssignments: [User: GameCharacter.Type] = [:]
+
     weak var game: Game?
 
     init(id: Int, isHuman: Bool) {

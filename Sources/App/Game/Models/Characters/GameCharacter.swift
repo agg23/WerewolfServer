@@ -50,9 +50,6 @@ class GameCharacter: Equatable {
 
     var selectionComplete: Bool = true
 
-    /// Mapping from character index to character type seen
-    var seenAssignments: [User: GameCharacter.Type] = [:]
-
     required init(id: Int) {
         self.id = id
     }
@@ -65,7 +62,6 @@ class GameCharacter: Equatable {
     // Performs any changes dictated by the current Game before entering night, such as a solo Werewolf adding a selectable
     func beginNight(with game: Game) {
         selectionComplete = false
-        seenAssignments = [:]
     }
 
     /// Performs any changes dictated by the current WWState before entering discussion, such as Insomniac updating their roll
@@ -74,7 +70,7 @@ class GameCharacter: Equatable {
     }
 
     /// Performs any necessary changes based on the provided Action. Returns true if updated state needs to be sent to the owning client
-    public func received(action: Action, game: Game) -> UpdateType {
+    public func received(action: Action, user: User, game: Game) -> UpdateType {
         selectionComplete = true
         
         return .hidden

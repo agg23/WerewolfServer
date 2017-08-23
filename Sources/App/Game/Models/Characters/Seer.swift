@@ -30,7 +30,7 @@ class Seer: GameCharacter {
         // Overridden Seer action
     }
 
-    override func received(action: Action, game: Game) -> UpdateType {
+    override func received(action: Action, user: User, game: Game) -> UpdateType {
         guard action.selections.count > 1 else {
             Logger.warning("Invalid Action for Seer")
             return .none
@@ -45,8 +45,8 @@ class Seer: GameCharacter {
             return .none
         }
 
-        self.seenAssignments[firstUser] = type(of: firstCharacter)
-        self.seenAssignments[secondUser] = type(of: secondCharacter)
+        user.seenAssignments[firstUser] = type(of: firstCharacter)
+        user.seenAssignments[secondUser] = type(of: secondCharacter)
 
         self.selectionComplete = true
         

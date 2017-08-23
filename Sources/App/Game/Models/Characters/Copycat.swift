@@ -37,25 +37,25 @@ class Copycat: GameCharacter {
         character.perform(actions: actions, with: game)
     }
 
-    override func received(action: Action, game: Game) -> UpdateType {
+    override func received(action: Action, user: User, game: Game) -> UpdateType {
         guard action.selections.count > 0 else {
             Logger.warning("Invalid Action for Copycat")
             return .none
         }
 
         if let inheritedCharacter = self.inheritedCharacter {
-            let received = inheritedCharacter.received(action: action, game: game)
+            let received = inheritedCharacter.received(action: action, user: user, game: game)
             updateCharacterProperties()
             return received
         } else {
             // Set new character
-            let user = action.selections[0]
+            let newUser = action.selections[0]
 
             guard let character = game.assignments[user] else {
                 Logger.error("Character assignment does not exist for user")
                 return .none
             }
-            self.seenAssignments[user] = type(of: character)
+            user.seenAssignments[newUser] = type(of: character)
 
             self.inheritedCharacter = character
 
@@ -79,9 +79,5 @@ class Copycat: GameCharacter {
         self.defaultVisible = character.defaultVisible
         self.defaultVisibleViewableType = character.defaultVisibleViewableType
         self.selectionComplete = character.selectionComplete
-        
-        for (index, seenCharacter) in character.seenAssignments {
-            self.seenAssignments[index] = seenCharacter
-        }
     }
 }

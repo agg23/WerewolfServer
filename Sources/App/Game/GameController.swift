@@ -85,6 +85,8 @@ class GameController {
                 game.registerUser(userController.createUser(isHuman: false))
             }
 
+            _ = game.users.map({ $0.value.seenAssignments = [:] })
+
             // Shuffle characters and instantiate them
             let shuffledCharacters = game.charactersInPlay.shuffled()
             let characters = shuffledCharacters.map({ return $0.init(id: game.nextAvailableId()) })
@@ -194,14 +196,13 @@ class GameController {
         var json = JSON()
         json["command"] = "characterUpdate"
         json["character"] = jsonFactory.makeCharacter(character)
-        json["seenAssignments"] = jsonFactory.makeSeenAssignments(character)
+        json["seenAssignments"] = jsonFactory.makeSeenAssignments(user)
 
         sendTo(user: user, json: json)
     }
 
     func hiddenCharacterUpdate(for user: User, in game: Game) {
-        guard let character = game.assignments[user],
-            let startingCharacter = game.startingAssignments[user] else {
+        guard let startingCharacter = game.startingAssignments[user] else {
             Logger.error("Attempted character update for user without assignment")
             return
         }
@@ -209,7 +210,7 @@ class GameController {
         var json = JSON()
         json["command"] = "characterUpdate"
         json["character"] = jsonFactory.makeCharacter(startingCharacter)
-        json["seenAssignments"] = jsonFactory.makeSeenAssignments(character)
+        json["seenAssignments"] = jsonFactory.makeSeenAssignments(user)
 
         sendTo(user: user, json: json)
     }
@@ -245,7 +246,7 @@ class GameController {
 
         game.addAction(action, for: user)
 
-        let characterNeedsUpdate = character.received(action: action, game: game)
+        let characterNeedsUpdate = character.received(action: action, user: user, game: game)
 
         let updateAll = checkGameStatus(game)
 

@@ -51,20 +51,20 @@ class Robber: GameCharacter {
         // TODO: Just call swap?
     }
 
-    override func received(action: Action, game: Game) -> UpdateType {
+    override func received(action: Action, user: User, game: Game) -> UpdateType {
         guard action.selections.count > 0 else {
             Logger.warning("Invalid WWActionData for Robber")
             return .none
         }
 
-        let user = action.selections[0]
+        let selectedUser = action.selections[0]
 
         guard let character = game.assignments[user] else {
             Logger.error("Character assignment does not exist for user")
             return .none
         }
 
-        self.seenAssignments[user] = type(of: character)
+        user.seenAssignments[selectedUser] = type(of: character)
 
         self.selectionComplete = true
         
