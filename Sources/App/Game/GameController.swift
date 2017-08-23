@@ -94,6 +94,15 @@ class GameController {
             // Assign characters to users
             game.mapCharactersToUsers(characters: characters)
 
+            // Update defaultViewable
+            for assignment in game.assignments {
+                for innerAssignment in game.assignments where assignment.key != innerAssignment.key {
+                    if checkDefaultViewable(innerAssignment.value.defaultVisible, character: assignment.value, on: assignment.key, with: innerAssignment.value.defaultVisibleViewableType) {
+                        innerAssignment.key.seenAssignments[assignment.key] = type(of: assignment.value)
+                    }
+                }
+            }
+
             let assignments = game.assignments.map({ (value) -> JSON in return jsonFactory.makeCharacterAssignment(for: value.key, with: value.value) })
             do {
                 let bytes = try JSON(assignments).makeBytes()
@@ -259,6 +268,19 @@ class GameController {
         } else if characterNeedsUpdate == .hidden {
             hiddenCharacterUpdate(for: user, in: game)
         }
+
+        // Update all defaultviewables
+        for assignment in game.assignments where assignment.value != character {
+            let characterType = type(of: character)
+            if checkDefaultViewable(assignment.value.defaultVisible, character: character, on: user, with: assignment.value.defaultVisibleViewableType) {
+                assignment.key.seenAssignments[user] = characterType
+                hiddenCharacterUpdate(for: assignment.key, in: game)
+            }
+        }
+    }
+
+    func checkDefaultViewable(_ defaultVisible: [GameCharacter.Type], character: GameCharacter, on user: User, with viewableType: GameCharacter.ViewableType) -> Bool {
+        return User.isViewable(type: viewableType, user: user) && defaultVisible.contains(where: { $0 == type(of: character) })
     }
 
     // MARK: - Communication

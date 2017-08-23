@@ -36,4 +36,17 @@ class User: Hashable {
     static func ==(lhs: User, rhs: User) -> Bool {
         return lhs.id == rhs.id
     }
+
+    static func isViewable(type: GameCharacter.ViewableType, user: User) -> Bool {
+        switch type {
+        case .all:
+            return true
+        case .none:
+            return false
+        case .humanOnly:
+            return user.isHuman
+        case .nonHumanOnly:
+            return !user.isHuman
+        }
+    }
 }
