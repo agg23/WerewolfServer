@@ -294,7 +294,7 @@ class GameController {
 
     func sendTo(user: User, json: JSON) {
         if let socket = userController.userSockets[user] {
-            socket.send(json: json)
+            socket.send(json: json, user: user)
         } else {
             // TODO: Handle unable to send to user
         }

@@ -43,7 +43,7 @@ class SocketController {
         json["serverVersion"] = JSON(version)
         json["availableCharacters"] = JSON(gameController.availableCharacters.map({ return JSON($0.name) }))
 
-        sendStatus(.success, task: "connect", data: json, message: nil, socket: socket)
+        sendStatus(.success, task: "connect", data: json, message: nil, socket: socket, user: user)
     }
 
     func socketResponse(socket: WebSocket, text: String, user: User) throws {
@@ -53,24 +53,24 @@ class SocketController {
             return
         }
 
-        Logger.info("Received message \(text)")
+        Logger.info("Received message from user \(user.id): \(text)")
 
         var json: JSON = JSON.null
 
         do {
             json = try JSON(bytes: Array(text.utf8))
             let data = try parse(json: json, socket: socket, user: user)
-            sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket)
+            sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket, user: user)
         } catch ParseError.missingData(let message) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Missing required field '" + message + "'", socket: socket)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Missing required field '" + message + "'", socket: socket, user: user)
         } catch ParseError.malformedData(let message) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Malformed field '" + message + "'", socket: socket)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Malformed field '" + message + "'", socket: socket, user: user)
         } catch ParseError.invalidCommand {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket, user: user)
         } catch let error as GameController.GameError where GameController.GameError.allValues.contains(error) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket, user: user)
         } catch {
-            sendStatus(.failure, task: nil, data: nil, message: "Unknown message", socket: socket)
+            sendStatus(.failure, task: nil, data: nil, message: "Unknown message", socket: socket, user: user)
         }
     }
 
@@ -115,7 +115,7 @@ extension SocketController {
         case failure = "failure"
     }
 
-    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, message: String?, socket: WebSocket) {
+    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, message: String?, socket: WebSocket, user: User) {
         var json = JSON()
         json["command"] = "response"
 
@@ -135,7 +135,7 @@ extension SocketController {
         if let message = message {
             json["message"] = JSON(message)
         }
-        socket.send(json: json)
+        socket.send(json: json, user: user)
     }
 
     // MARK: - User Functions
