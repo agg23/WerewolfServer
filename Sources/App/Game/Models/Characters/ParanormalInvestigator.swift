@@ -13,6 +13,8 @@ class ParanormalInvestigator: GameCharacter {
         return "pi"
     }
 
+    var firstCharacterSelect: Bool = false
+
     required init(id: Int) {
         super.init(id: id)
 
@@ -32,61 +34,64 @@ class ParanormalInvestigator: GameCharacter {
     }
 
     // TODO: Finish
-//    override func perform(action: Action, with game: Game, playerIndex: Int) {
-//        if action.selections.count < 2 {
-//            return
-//        }
-//
-//        // We only care if the second card looked at was bad
-//        let secondActionData = action.actions[1]
-//
-//        guard let second = secondActionData.firstSelection else {
-//            print("[WARNING] Invalid WWActionData for PI")
-//            return
-//        }
-//
-//        guard let character = state.assignments[second] else {
-//            print("[WARNING] Invalid selected player for PI")
-//            return
-//        }
-//
-//        if shouldBecome(type(of: character)) {
+    override func perform(actions: [Action], with game: Game) {
+        guard actions.count > 1 else {
+            return
+        }
+
+        guard let lastAction = actions.last,
+            lastAction.selections.count > 0 else {
+                Logger.warning("Invalid Action for PI")
+                return
+        }
+
+        // We only care if the second card looked at was bad
+        let selectedUser = lastAction.selections[0]
+
+        guard let character = game.assignments[selectedUser] else {
+            Logger.error("Character assignment does not exist for user")
+            return
+        }
+
+        if shouldBecome(type(of: character)) {
+            // TODO: Finish
 //            self.transferedCharacterName = character.name
-//        }
-//    }
-//
-//    public override func received(action: WWAction, state: WWState) -> Bool {
-//        let firstActionData = action.actions[0]
-//
-//        guard let first = firstActionData.firstSelection else {
-//            print("[WARNING] Invalid WWActionData for PI")
-//            return false
-//        }
-//
-//        if self.firstCharacterSelect {
-//            self.selectionComplete = true
-//        }
-//
-//        if let character = state.assignments[first] {
-//            self.firstCharacterSelect = true
-//
-//            let type = type(of: character)
-//            self.seenAssignments[first] = character.name
-//
-//            if shouldBecome(type) {
-//                self.interactionCount = 0
-//                self.selectionComplete = true
-//
-//                self.transferedCharacterName = character.name
-//                
-//                return true
-//            }
-//        } else {
-//            print("[WARNING] Invalid selected character for PI")
-//        }
-//        
-//        return true
-//    }
+        }
+    }
+
+    override func received(action: Action, user: User, game: Game) -> UpdateType {
+        guard action.selections.count > 0 else {
+            Logger.warning("Invalid Action for PI")
+            return .none
+        }
+
+        let selectedUser = action.selections[0]
+
+        if self.firstCharacterSelect {
+            self.selectionComplete = true
+        }
+
+        if let character = game.assignments[selectedUser] {
+            self.firstCharacterSelect = true
+
+            let type = type(of: character)
+            user.seenAssignments[selectedUser] = type
+
+            if shouldBecome(type) {
+                selectionCount = 0
+                selectionComplete = true
+
+                // TODO: Add
+//                transferedCharacterName = character.name
+
+                return .full
+            }
+        } else {
+            Logger.warning("Invalid selected character for PI")
+        }
+        
+        return .hidden
+    }
 
     private func shouldBecome(_ type: GameCharacter.Type) -> Bool {
         // TODO: Update to include Tanner
