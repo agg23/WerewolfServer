@@ -28,19 +28,20 @@ class GameInfoController {
 
         var string = try String(contentsOf: url, encoding: .utf8)
 
-        string = string.replacingOccurrences(of: "[38;5;38m", with: "<font color=\"blue\">")
-        string = string.replacingOccurrences(of: "[38;5;178m", with: "<font color=\"yellow\">")
-        string = string.replacingOccurrences(of: "[38;5;197m", with: "<font color=\"red\">")
-        string = string.replacingOccurrences(of: "[0m", with: "</font>")
-
-        string = "<html><body>" + string + "</body></html>"
-
-        var finalString = ""
-
-        string.enumerateLines { (line, _) in
-            finalString += "<p>" + line + "</p>"
-        }
-
-        return Response(status: Status.init(statusCode: 200), body: finalString)
+//        string = string.replacingOccurrences(of: "[38;5;38m", with: "<font color=\"blue\">")
+//        string = string.replacingOccurrences(of: "[38;5;178m", with: "<font color=\"yellow\">")
+//        string = string.replacingOccurrences(of: "[38;5;197m", with: "<font color=\"red\">")
+//        string = string.replacingOccurrences(of: "[0m", with: "</font>")
+//
+//        string = "<html><body>" + string + "</body></html>"
+//
+//        var finalString = ""
+//
+//        string.enumerateLines { (line, _) in
+//            finalString += "<p>" + line + "</p>"
+//        }
+//
+//        return Response(status: Status.init(statusCode: 200), body: finalString)
+        return string
     }
 }
