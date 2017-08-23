@@ -41,6 +41,7 @@ class SocketController {
         var json = JSON()
         json["id"] = JSON(user.id)
         json["serverVersion"] = JSON(version)
+        json["availableCharacters"] = JSON(gameController.availableCharacters.map({ return JSON($0.name) }))
 
         sendStatus(.success, task: "connect", data: json, message: nil, socket: socket)
     }

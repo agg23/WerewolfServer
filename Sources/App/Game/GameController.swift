@@ -9,7 +9,8 @@
 import Foundation
 
 class GameController {
-    let availableCharacters: [GameCharacter.Type] = [Copycat.self, Werewolf.self, Werewolf.self, Minion.self, Mason.self, Mason.self, Seer.self, ParanormalInvestigator.self, Robber.self, Witch.self, Troublemaker.self, Insomniac.self]
+    // TODO: Add in ParanormalInvestigator.self
+    let availableCharacters: [GameCharacter.Type] = [Copycat.self, Werewolf.self, Werewolf.self, Minion.self, Mason.self, Mason.self, Seer.self, Robber.self, Witch.self, Troublemaker.self, Insomniac.self]
 
     static let instance = GameController()
     let userController = UserController.instance
