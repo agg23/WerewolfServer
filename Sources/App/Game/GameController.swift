@@ -164,10 +164,21 @@ class GameController {
 
             Logger.info("Game \(game.id) entering lobby")
 
+            sendFinalGameResults(game)
+
             game.state = .lobby
         }
 
         return game.state != startingGameState
+    }
+
+    func sendFinalGameResults(_ game: Game) {
+        var json = jsonFactory.makeResponse("gameResults")
+
+        let assignments = game.assignments.map({ (value) -> JSON in return jsonFactory.makeCharacterAssignment(for: value.key, with: value.value) })
+        json["assignments"] = JSON(assignments)
+
+        sendToUsers(json: json, in: game)
     }
 
     func updateGameStatus(_ game: Game) {
