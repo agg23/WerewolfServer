@@ -95,6 +95,8 @@ class GameController {
             // Assign characters to users
             game.mapCharactersToUsers(characters: characters)
 
+            _ = game.assignments.map({ $0.value.beginNight(with: game) })
+
             // Update defaultViewable
             for assignment in game.assignments {
                 for innerAssignment in game.assignments where assignment.key != innerAssignment.key {

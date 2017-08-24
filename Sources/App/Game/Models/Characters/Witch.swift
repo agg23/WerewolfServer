@@ -31,16 +31,26 @@ class Witch: GameCharacter {
     }
 
     override func perform(actions: [Action], with game: Game) {
-        guard let lastAction = actions.last,
-            lastAction.selections.count > 1 else {
+        // TODO: Fix dying on this.
+        guard actions.count > 1,
+            let lastAction = actions.last else {
             Logger.warning("Not two Actions for Witch")
             return
         }
 
-        let firstUser = lastAction.selections[0]
-        let secondUser = lastAction.selections[1]
+        let secondLastAction = actions[actions.count - 2]
 
+        guard lastAction.selections.count > 0,
+            secondLastAction.selections.count > 0 else {
+            Logger.warning("Last two Actions for Witch have insufficient counts")
+            return
+        }
+
+        let firstUser = secondLastAction.selections[0]
+        
         // Nonhuman card
+        let secondUser = lastAction.selections[0]
+
         game.swap(firstUser: firstUser, secondUser: secondUser)
     }
 
