@@ -66,6 +66,10 @@ class Game: Hashable {
     }
 
     func unreadyUser(_ user: User) {
+        guard user.isHuman else {
+            return
+        }
+        
         userReady[user] = false
     }
 
