@@ -50,8 +50,6 @@ class JSONFactory {
 
         var allowedActions = JSON()
 
-        allowedActions["selectableType"] = JSON(character.selectableType.rawValue)
-
         if character.selectableType != .none {
             allowedActions["selectionCount"] = JSON(character.selectionComplete ? 0 : character.selectionCount)
         }
