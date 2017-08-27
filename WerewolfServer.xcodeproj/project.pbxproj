@@ -869,9 +869,6 @@
 		OBJ_2419 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* GameController.swift */; };
 		OBJ_2420 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_15 /* UserController.swift */; };
 		OBJ_2421 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_46 /* Post.swift */; };
-		OBJ_2422 /* WWGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_17 /* WWGame.swift */; };
-		OBJ_2423 /* WWPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_18 /* WWPlayer.swift */; };
-		OBJ_2424 /* WWState.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_19 /* WWState.swift */; };
 		OBJ_2425 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_21 /* Game.swift */; };
 		OBJ_2426 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_22 /* User.swift */; };
 		OBJ_2427 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* Error.swift */; };
@@ -4791,7 +4788,6 @@
 		OBJ_165 /* Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifier.swift; sourceTree = "<group>"; };
 		OBJ_167 /* GeneralSQLSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSQLSerializer.swift; sourceTree = "<group>"; };
 		OBJ_168 /* SQLSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLSerializer.swift; sourceTree = "<group>"; };
-		OBJ_17 /* WWGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWGame.swift; sourceTree = "<group>"; };
 		OBJ_170 /* SQLiteDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDriver.swift; sourceTree = "<group>"; };
 		OBJ_171 /* SQLiteSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteSerializer.swift; sourceTree = "<group>"; };
 		OBJ_173 /* Exports.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exports.swift; sourceTree = "<group>"; };
@@ -4800,7 +4796,6 @@
 		OBJ_177 /* Compound.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Compound.swift; sourceTree = "<group>"; };
 		OBJ_178 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		OBJ_179 /* Tester+Chunk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+Chunk.swift"; sourceTree = "<group>"; };
-		OBJ_18 /* WWPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWPlayer.swift; sourceTree = "<group>"; };
 		OBJ_180 /* Tester+CustomKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+CustomKeys.swift"; sourceTree = "<group>"; };
 		OBJ_181 /* Tester+ForeignKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+ForeignKey.swift"; sourceTree = "<group>"; };
 		OBJ_182 /* Tester+Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+Index.swift"; sourceTree = "<group>"; };
@@ -4811,7 +4806,6 @@
 		OBJ_187 /* Tester+SoftDelete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+SoftDelete.swift"; sourceTree = "<group>"; };
 		OBJ_188 /* Tester+Timestamps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+Timestamps.swift"; sourceTree = "<group>"; };
 		OBJ_189 /* Tester+Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+Transaction.swift"; sourceTree = "<group>"; };
-		OBJ_19 /* WWState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWState.swift; sourceTree = "<group>"; };
 		OBJ_190 /* Tester+Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tester+Utilities.swift"; sourceTree = "<group>"; };
 		OBJ_191 /* Tester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tester.swift; sourceTree = "<group>"; };
 		OBJ_194 /* sqlite3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
@@ -6240,7 +6234,6 @@
 			children = (
 				OBJ_14 /* GameController.swift */,
 				OBJ_15 /* UserController.swift */,
-				OBJ_16 /* Logic */,
 				OBJ_20 /* Models */,
 				OBJ_37 /* Utility */,
 				OBJ_41 /* Web Controllers */,
@@ -6294,16 +6287,6 @@
 				OBJ_165 /* Modifier.swift */,
 			);
 			path = Schema;
-			sourceTree = "<group>";
-		};
-		OBJ_16 /* Logic */ = {
-			isa = PBXGroup;
-			children = (
-				OBJ_17 /* WWGame.swift */,
-				OBJ_18 /* WWPlayer.swift */,
-				OBJ_19 /* WWState.swift */,
-			);
-			path = Logic;
 			sourceTree = "<group>";
 		};
 		OBJ_166 /* SQL */ = {
@@ -10198,9 +10181,6 @@
 				OBJ_2419 /* GameController.swift in Sources */,
 				OBJ_2420 /* UserController.swift in Sources */,
 				OBJ_2421 /* Post.swift in Sources */,
-				OBJ_2422 /* WWGame.swift in Sources */,
-				OBJ_2423 /* WWPlayer.swift in Sources */,
-				OBJ_2424 /* WWState.swift in Sources */,
 				OBJ_2425 /* Game.swift in Sources */,
 				OBJ_2426 /* User.swift in Sources */,
 				OBJ_2427 /* Error.swift in Sources */,
