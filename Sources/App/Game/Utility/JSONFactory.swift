@@ -19,13 +19,13 @@ class JSONFactory {
     func makeUser(_ user: User, using game: Game) -> JSON {
         var json = JSON()
 
-        json["id"] = JSON(user.id)
+        json["id"] = JSON(user.identifier)
         json["nickname"] = JSON(user.nickname)
 
         if let ready = game.userReady[user] {
             json["ready"] = JSON(ready)
         } else if user.isHuman {
-            Logger.warning("Ready state for user \(user.id) could not be determined")
+            Logger.warning("Ready state for user \(user.identifier) could not be determined")
         }
 
         json["isHuman"] = JSON(user.isHuman)
@@ -64,7 +64,7 @@ class JSONFactory {
     func makeSeenAssignments(_ user: User) -> JSON {
         let assignments = user.seenAssignments.map { (value) -> JSON in
             var assignmentJson = JSON()
-            assignmentJson["id"] = JSON(value.key.id)
+            assignmentJson["id"] = JSON(value.key.identifier)
             assignmentJson["character"] = JSON(value.value.name)
             return assignmentJson
         }
@@ -75,7 +75,7 @@ class JSONFactory {
     func makeCharacterAssignment(for user: User, with character: GameCharacter) -> JSON {
         var json = JSON()
         
-        json["id"] = JSON(user.id)
+        json["id"] = JSON(user.identifier)
         json["character"] = JSON(type(of: character).name)
 
         return json

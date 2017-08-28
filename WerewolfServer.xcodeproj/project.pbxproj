@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660255A11F539F7500008944 /* AuthenticationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 660255A01F539F7500008944 /* AuthenticationController.swift */; };
 		66267C641F4A2FA10013C9B5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66267C631F4A2FA10013C9B5 /* Logger.swift */; };
 		66267C661F4A49D10013C9B5 /* GeneralExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66267C651F4A49D10013C9B5 /* GeneralExtensions.swift */; };
 		OBJ_1000 /* FoundationStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_700 /* FoundationStream.swift */; };
@@ -4723,6 +4724,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		660255A01F539F7500008944 /* AuthenticationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationController.swift; sourceTree = "<group>"; };
 		66267C631F4A2FA10013C9B5 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		66267C651F4A49D10013C9B5 /* GeneralExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralExtensions.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Droplet+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Droplet+Setup.swift"; sourceTree = "<group>"; };
@@ -6981,6 +6983,7 @@
 				OBJ_42 /* GameInfoController.swift */,
 				OBJ_43 /* SocketController.swift */,
 				OBJ_44 /* WebController.swift */,
+				660255A01F539F7500008944 /* AuthenticationController.swift */,
 			);
 			path = "Web Controllers";
 			sourceTree = "<group>";
@@ -10197,6 +10200,7 @@
 				OBJ_2438 /* Minion.swift in Sources */,
 				OBJ_2439 /* ParanormalInvestigator.swift in Sources */,
 				OBJ_2440 /* Robber.swift in Sources */,
+				660255A11F539F7500008944 /* AuthenticationController.swift in Sources */,
 				66267C641F4A2FA10013C9B5 /* Logger.swift in Sources */,
 				OBJ_2441 /* Seer.swift in Sources */,
 				OBJ_2442 /* Troublemaker.swift in Sources */,

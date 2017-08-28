@@ -9,8 +9,16 @@
 import Vapor
 import FluentProvider
 
-class User: Hashable {
-    let id: Int
+final class User: Model, Hashable {
+    let storage = Storage()
+
+    var identifier: Int {
+        return id?.int ?? 0
+    }
+
+    let username: String
+    var password: String
+
     var nickname: String
 
     let isHuman: Bool
@@ -21,20 +29,45 @@ class User: Hashable {
     weak var game: Game?
 
     init(id: Int, isHuman: Bool) {
-        self.id = id
+        // TODO: Finish
+        self.username = ""
+        self.password = ""
+
         self.isHuman = isHuman
 
         self.nickname = isHuman ? "User \(id)" : "Nonhuman \(id)"
     }
 
+    // MARK: - Model
+
+    required init(row: Row) throws {
+        self.username = try row.get("username")
+        self.password = try row.get("password")
+
+        self.nickname = try row.get("nickname")
+
+        self.isHuman = true
+    }
+
+    func makeRow() throws -> Row {
+        var row = Row()
+        try row.set("id", id)
+        try row.set("username", username)
+        try row.set("password", password)
+
+        try row.set("nickname", nickname)
+
+        return row
+    }
+
     // MARK: - Hashable
 
     var hashValue: Int {
-        return id
+        return identifier
     }
 
     static func ==(lhs: User, rhs: User) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.hashValue == rhs.hashValue
     }
 
     static func isViewable(type: GameCharacter.ViewableType, user: User) -> Bool {
@@ -48,5 +81,20 @@ class User: Hashable {
         case .nonHumanOnly:
             return !user.isHuman
         }
+    }
+}
+
+extension User: Preparation {
+    static func prepare(_ database: Database) throws {
+        try database.create(self) { users in
+            users.id()
+            users.string("username")
+            users.string("password")
+            users.string("nickname")
+        }
+    }
+
+    static func revert(_ database: Database) throws {
+        try database.delete(self)
     }
 }

@@ -9,22 +9,34 @@
 import Foundation
 import Vapor
 
+class SocketData {
+    var user: User?
+}
+
 class SocketController {
     let gameController = GameController.instance
+    let authenticationController = AuthenticationController()
 
     var version: String!
 
     func socketHandler(_ request: Request, socket: WebSocket) throws {
         Logger.info("Opened connection")
 
-        let user = UserController.instance.createUser()
-        UserController.instance.registerUser(user, with: socket)
+        let socketData = SocketData()
+
+//        let user = UserController.instance.createUser()
+//        UserController.instance.registerUser(user, with: socket)
 
         socket.onText = { (socket: WebSocket, text: String) throws in
-            try self.socketResponse(socket: socket, text: text, user: user)
+            try self.socketResponse(socket: socket, text: text, socketData: socketData)
         }
 
         socket.onClose = { (socket: WebSocket, code: UInt16?, reason: String?, clean: Bool) throws in
+            guard let user = socketData.user else {
+                Logger.info("Socket closed for unauthenticated user")
+                return
+            }
+
             Logger.info("Socket closed for user \(user.id)")
             // Disconnect user
             do {
@@ -38,45 +50,54 @@ class SocketController {
             Logger.info("Ping")
         }
 
-        var json = JSON()
-        json["id"] = JSON(user.id)
-        json["serverVersion"] = JSON(version)
-        json["availableCharacters"] = JSON(gameController.availableCharacters.map({ return JSON($0.name) }))
-
-        sendStatus(.success, task: "connect", data: json, message: nil, socket: socket, user: user)
+        sendStatus(.success, task: "connect", data: nil, message: nil, socket: socket, socketData: socketData)
     }
 
-    func socketResponse(socket: WebSocket, text: String, user: User) throws {
+    func socketResponse(socket: WebSocket, text: String, socketData: SocketData) throws {
         if text == "__ping__" {
             // Send pong response
             try socket.send("__pong__")
             return
         }
 
-        Logger.info("Received message from user \(user.id): \(text)")
+        if let user = socketData.user {
+            Logger.info("Received message from user \(user.id): \(text)")
+        } else {
+            Logger.info("Received message from unauthenticated user: \(text)")
+        }
 
         var json: JSON = JSON.null
 
         do {
             json = try JSON(bytes: Array(text.utf8))
-            let data = try parse(json: json, socket: socket, user: user)
-            sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket, user: user)
+            let data = try parse(json: json, socket: socket, socketData: socketData)
+            sendStatus(.success, task: json["command"]?.string, data: data, message: nil, socket: socket, socketData: socketData)
         } catch ParseError.missingData(let message) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Missing required field '" + message + "'", socket: socket, user: user)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Missing required field '" + message + "'", socket: socket, socketData: socketData)
         } catch ParseError.malformedData(let message) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Malformed field '" + message + "'", socket: socket, user: user)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Malformed field '" + message + "'", socket: socket, socketData: socketData)
         } catch ParseError.invalidCommand {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket, user: user)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: "Invalid command", socket: socket, socketData: socketData)
         } catch let error as GameController.GameError where GameController.GameError.allValues.contains(error) {
-            sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket, user: user)
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: GameController.GameError.message(for: error), socket: socket, socketData: socketData)
+        } catch let error as AuthenticationController.AuthenticationError where AuthenticationController.AuthenticationError.allValues.contains(error) {
+            sendStatus(.failure, task: json["command"]?.string, data: nil, message: AuthenticationController.AuthenticationError.message(for: error), socket: socket, socketData: socketData)
         } catch {
-            sendStatus(.failure, task: nil, data: nil, message: "Unknown message", socket: socket, user: user)
+            sendStatus(.failure, task: nil, data: nil, message: "Unknown message", socket: socket, socketData: socketData)
         }
     }
 
-    func parse(json: JSON, socket: WebSocket, user: User) throws -> JSON? {
+    func parse(json: JSON, socket: WebSocket, socketData: SocketData) throws -> JSON? {
         guard let command = json["command"]?.string else {
             throw ParseError.invalidCommand
+        }
+
+        if command == "login" {
+            return try authenticationController.login(socketController: self, json: json, socket: socket, socketData: socketData)
+        }
+
+        guard let user = socketData.user else {
+            throw AuthenticationController.AuthenticationError.authRequired
         }
 
         switch command {
@@ -115,7 +136,7 @@ extension SocketController {
         case failure = "failure"
     }
 
-    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, message: String?, socket: WebSocket, user: User) {
+    func sendStatus(_ status: MessageStatus, task: String?, data: JSON?, message: String?, socket: WebSocket, socketData: SocketData) {
         var json = JSON()
         json["command"] = "response"
 
@@ -135,7 +156,7 @@ extension SocketController {
         if let message = message {
             json["message"] = JSON(message)
         }
-        socket.send(json: json, user: user)
+        socket.send(json: json, socketData: socketData)
     }
 
     // MARK: - User Functions

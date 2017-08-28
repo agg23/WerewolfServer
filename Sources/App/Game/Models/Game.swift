@@ -44,7 +44,7 @@ class Game: Hashable {
     }
 
     func registerUser(_ user: User) {
-        users[user.id] = user
+        users[user.identifier] = user
 
         if user.isHuman {
             userReady[user] = false
@@ -54,7 +54,7 @@ class Game: Hashable {
     }
 
     func removeUser(_ user: User) {
-        users.removeValue(forKey: user.id)
+        users.removeValue(forKey: user.identifier)
 
         userReady.removeValue(forKey: user)
 
