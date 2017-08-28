@@ -24,9 +24,6 @@ class SocketController {
 
         let socketData = SocketData()
 
-//        let user = UserController.instance.createUser()
-//        UserController.instance.registerUser(user, with: socket)
-
         socket.onText = { (socket: WebSocket, text: String) throws in
             try self.socketResponse(socket: socket, text: text, socketData: socketData)
         }

@@ -57,6 +57,7 @@ class AuthenticationController {
 
         // Authentication complete
         socketData.user = user
+        UserController.instance.registerUser(user, with: socket)
 
         var json = JSON()
         json["id"] = JSON(user.identifier)

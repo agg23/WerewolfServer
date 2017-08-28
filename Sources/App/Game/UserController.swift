@@ -25,7 +25,7 @@ class UserController {
 
         userSockets[user] = socket
 
-        Logger.info("Registered user \(user.id)")
+        Logger.info("Registered user \(user.identifier)")
     }
 
     func nextAvailableId() -> Int {
