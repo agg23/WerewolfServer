@@ -19,6 +19,7 @@ import SwiftyBeaverProvider
 /// if no command is given, it will default to "serve"
 let config = try Config()
 try config.addProvider(SwiftyBeaverProvider.Provider.self)
+config.preparations.append(User.self)
 try config.setup()
 
 let drop = try Droplet(config)
