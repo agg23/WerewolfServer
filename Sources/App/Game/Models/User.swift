@@ -9,8 +9,8 @@
 import Vapor
 import FluentProvider
 
-final class User: Model, Hashable {
-    let storage = Storage()
+public final class User: Model, Hashable {
+    public let storage = Storage()
 
     var identifier: Int {
         return id?.int ?? 0
@@ -19,7 +19,7 @@ final class User: Model, Hashable {
     let username: String
     var password: String
 
-    var nickname: String
+    var nickname: String?
 
     let isHuman: Bool
 
@@ -38,9 +38,17 @@ final class User: Model, Hashable {
         self.nickname = isHuman ? "User \(id)" : "Nonhuman \(id)"
     }
 
+    init(username: String, password: String, nickname: String?) {
+        self.username = username
+        self.password = password
+        self.nickname = nickname
+
+        self.isHuman = true
+    }
+
     // MARK: - Model
 
-    required init(row: Row) throws {
+    public required init(row: Row) throws {
         self.username = try row.get("username")
         self.password = try row.get("password")
 
@@ -49,7 +57,7 @@ final class User: Model, Hashable {
         self.isHuman = true
     }
 
-    func makeRow() throws -> Row {
+    public func makeRow() throws -> Row {
         var row = Row()
         try row.set("id", id)
         try row.set("username", username)
@@ -62,11 +70,11 @@ final class User: Model, Hashable {
 
     // MARK: - Hashable
 
-    var hashValue: Int {
+    public var hashValue: Int {
         return identifier
     }
 
-    static func ==(lhs: User, rhs: User) -> Bool {
+    public static func ==(lhs: User, rhs: User) -> Bool {
         return lhs.hashValue == rhs.hashValue
     }
 
@@ -85,16 +93,16 @@ final class User: Model, Hashable {
 }
 
 extension User: Preparation {
-    static func prepare(_ database: Database) throws {
+    public static func prepare(_ database: Database) throws {
         try database.create(self) { users in
             users.id()
             users.string("username")
             users.string("password")
-            users.string("nickname")
+            users.string("nickname", optional: true)
         }
     }
 
-    static func revert(_ database: Database) throws {
+    public static func revert(_ database: Database) throws {
         try database.delete(self)
     }
 }

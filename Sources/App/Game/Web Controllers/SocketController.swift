@@ -58,7 +58,7 @@ class SocketController {
         }
 
         if let user = socketData.user {
-            Logger.info("Received message from user \(user.id): \(text)")
+            Logger.info("Received message from user \(user.identifier): \(text)")
         } else {
             Logger.info("Received message from unauthenticated user: \(text)")
         }
@@ -91,6 +91,8 @@ class SocketController {
 
         if command == "login" {
             return try authenticationController.login(socketController: self, json: json, socket: socket, socketData: socketData)
+        } else if command == "register" {
+            return try authenticationController.register(socketController: self, json: json, socket: socket, socketData: socketData)
         }
 
         guard let user = socketData.user else {
