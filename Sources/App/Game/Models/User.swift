@@ -17,7 +17,9 @@ public final class User: Model, Hashable {
     }
 
     let username: String
-    var password: String
+
+    /// Stores the password hashed
+    var passwordHash: String
 
     var nickname: String?
 
@@ -31,16 +33,16 @@ public final class User: Model, Hashable {
     init(id: Int, isHuman: Bool) {
         // TODO: Finish
         self.username = ""
-        self.password = ""
+        self.passwordHash = ""
 
         self.isHuman = isHuman
 
         self.nickname = isHuman ? "User \(id)" : "Nonhuman \(id)"
     }
 
-    init(username: String, password: String, nickname: String?) {
+    init(username: String, passwordHash: String, nickname: String?) {
         self.username = username
-        self.password = password
+        self.passwordHash = passwordHash
         self.nickname = nickname
 
         self.isHuman = true
@@ -50,7 +52,7 @@ public final class User: Model, Hashable {
 
     public required init(row: Row) throws {
         self.username = try row.get("username")
-        self.password = try row.get("password")
+        self.passwordHash = try row.get("password")
 
         self.nickname = try row.get("nickname")
 
@@ -61,7 +63,7 @@ public final class User: Model, Hashable {
         var row = Row()
         try row.set("id", id)
         try row.set("username", username)
-        try row.set("password", password)
+        try row.set("password", passwordHash)
 
         try row.set("nickname", nickname)
 

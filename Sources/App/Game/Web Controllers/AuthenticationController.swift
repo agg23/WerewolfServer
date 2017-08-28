@@ -7,9 +7,12 @@
 //
 
 import Foundation
+import BCrypt
 import FluentProvider
 
 class AuthenticationController {
+    let hasher = BCryptHasher()
+
     enum AuthenticationError: Error {
         case authRequired
         case authFailed
@@ -53,8 +56,15 @@ class AuthenticationController {
             throw AuthenticationError.invalidUser
         }
 
-        // TODO: Salt and hash passwords
-        guard user.password == password else {
+        var passwordValidated = false
+
+        do {
+            passwordValidated = try hasher.check(password.bytes, matchesHash: user.passwordHash.bytes)
+        } catch {
+            passwordValidated = false
+        }
+
+        if !passwordValidated {
             throw AuthenticationError.authFailed
         }
 
@@ -70,9 +80,13 @@ class AuthenticationController {
             throw SocketController.ParseError.missingData("password")
         }
 
-        let user = User(username: username, password: password, nickname: json["nickname"]?.string)
+        let user: User
 
         do {
+            let hashedPassword = try hasher.make(password)
+
+            user = User(username: username, passwordHash: hashedPassword.makeString(), nickname: json["nickname"]?.string)
+
             try user.save()
         } catch {
             Logger.error("Database saving error: \(error)")
