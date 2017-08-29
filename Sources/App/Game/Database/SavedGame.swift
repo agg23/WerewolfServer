@@ -1,0 +1,73 @@
+//
+//  SavedGame.swift
+//  WerewolfServer
+//
+//  Created by Adam Gastineau on 8/28/17.
+//
+//
+
+import Foundation
+import FluentProvider
+
+final class SavedGame: Model {
+    let storage = Storage()
+
+    let start: Date
+    let end: Date
+
+    let winningTeam: String?
+
+    let charactersInPlay: [String]
+
+    let startingAssignments: GameAssignments
+    let endingAssignments: GameAssignments
+
+    var users: Siblings<SavedGame, User, Pivot<SavedGame, User>> {
+        return siblings()
+    }
+
+    var actions: Siblings<SavedGame, UsersActions, Pivot<SavedGame, UsersActions>> {
+        return siblings()
+    }
+
+    // MARK: - Model
+
+    public required init(row: Row) throws {
+        self.start = try row.get("startDate")
+        self.end = try row.get("endDate")
+
+        self.winningTeam = try row.get("winningTeam")
+
+        let inPlay: String = try row.get("charactersInPlay")
+        self.charactersInPlay = inPlay.components(separatedBy: ",")
+
+        let startingAssignmentsId: Identifier = try row.get("startingAssignmentsId")
+        let endingAssignmentsId: Identifier = try row.get("endingAssignmentsId")
+
+        guard let startingAssignments = try GameAssignments.find(startingAssignmentsId),
+            let endingAssignments = try GameAssignments.find(endingAssignmentsId) else {
+                throw DatabaseController.DatabaseError.failedCreation
+        }
+
+        self.startingAssignments = startingAssignments
+        self.endingAssignments = endingAssignments
+    }
+
+    public func makeRow() throws -> Row {
+        var row = Row()
+        try row.set("startDate", start)
+        try row.set("endDate", end)
+
+        try row.set("winningTeam", winningTeam)
+
+        try row.set("charactersInPlay", charactersInPlay.reduce("", { (result, string) -> String in
+            return "\(result),\(string)"
+        }))
+
+        try row.set("startingAssignmentsId", startingAssignments.id)
+        try row.set("endingAssignmentsId", endingAssignments.id)
+
+        return row
+    }
+
+}
