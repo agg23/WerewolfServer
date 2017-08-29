@@ -16,6 +16,10 @@ final class GameAssignments: Model {
         return children()
     }
 
+    init() {
+        
+    }
+
     // MARK: - Model
 
     public required init(row: Row) throws {

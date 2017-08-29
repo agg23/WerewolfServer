@@ -20,6 +20,13 @@ final class UserAction: Model {
         return siblings()
     }
 
+    init(type: Action.SelectionType, rotation: Action.Rotation) {
+        self.type = type
+        self.rotation = rotation
+    }
+
+    // MARK: - Model
+
     public required init(row: Row) throws {
         let type: String = try row.get("type")
         let rotation: String? = try row.get("rotation")

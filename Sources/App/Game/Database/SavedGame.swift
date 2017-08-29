@@ -30,6 +30,18 @@ final class SavedGame: Model {
         return siblings()
     }
 
+    init(start: Date, end: Date, winningTeam: String?, charactersInPlay: [String], startingAssignments: GameAssignments, endingAssignments: GameAssignments) {
+        self.start = start
+        self.end = end
+
+        self.winningTeam = winningTeam
+
+        self.charactersInPlay = charactersInPlay
+
+        self.startingAssignments = startingAssignments
+        self.endingAssignments = endingAssignments
+    }
+
     // MARK: - Model
 
     public required init(row: Row) throws {

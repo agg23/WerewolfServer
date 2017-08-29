@@ -35,6 +35,8 @@ class Game: Hashable {
     var startingAssignments: [User: GameCharacter] = [:]
     var actions: [User: [Action]] = [:]
 
+    var startDate: Date?
+
     private var lowestAvailableId: Int = 0
 
     init(id: Int) {

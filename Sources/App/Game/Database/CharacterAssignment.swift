@@ -12,8 +12,16 @@ import FluentProvider
 final class CharacterAssignment: Model {
     let storage = Storage()
 
+    private let gameAssignmentsId: Int?
+
     let user: User
     let character: GameCharacter.Type
+
+    init(user: User, character: GameCharacter.Type, parent gameAssignments: GameAssignments) {
+        self.user = user
+        self.character = character
+        self.gameAssignmentsId = gameAssignments.id?.int
+    }
 
     // MARK: - Model
 
@@ -28,12 +36,15 @@ final class CharacterAssignment: Model {
 
         self.user = user
         self.character = character
+
+        self.gameAssignmentsId = try row.get("gameassignment_id")
     }
 
     public func makeRow() throws -> Row {
         var row = Row()
         try row.set("userId", user.identifier)
         try row.set("characterType", character.name)
+        try row.set("gameAssignments_id", gameAssignmentsId)
 
         return row
     }
@@ -45,6 +56,7 @@ extension CharacterAssignment: Preparation {
             assignments.id()
             assignments.int("userId")
             assignments.string("characterType")
+            assignments.parent(GameAssignments.self, optional: false)
         }
     }
 

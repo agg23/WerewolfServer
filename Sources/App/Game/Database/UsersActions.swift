@@ -18,6 +18,12 @@ final class UsersActions: Model {
         return children()
     }
 
+    init(user: User) {
+        self.user = user
+    }
+
+    // MARK: - Model
+
     public required init(row: Row) throws {
         let userId: Int = try row.get("userId")
 

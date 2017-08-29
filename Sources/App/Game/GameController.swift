@@ -114,6 +114,8 @@ class GameController {
                 // Ignore failure
             }
 
+            game.startDate = Date()
+
             updateAllCharacters(game, type: .full)
 
             // To allow instant transition to discussion
