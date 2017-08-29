@@ -37,5 +37,18 @@ final class CharacterAssignment: Model {
 
         return row
     }
+}
 
+extension CharacterAssignment: Preparation {
+    public static func prepare(_ database: Database) throws {
+        try database.create(self) { assignments in
+            assignments.id()
+            assignments.int("userId")
+            assignments.string("characterType")
+        }
+    }
+
+    public static func revert(_ database: Database) throws {
+        try database.delete(self)
+    }
 }

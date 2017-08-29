@@ -69,5 +69,22 @@ final class SavedGame: Model {
 
         return row
     }
+}
 
+extension SavedGame: Preparation {
+    public static func prepare(_ database: Database) throws {
+        try database.create(self) { games in
+            games.id()
+            games.date("startDate")
+            games.date("endDate")
+            games.string("winningTeam", optional: true)
+            games.string("charactersInPlay")
+            games.string("startingAssignmentsId")
+            games.string("endingAssignmentsId")
+        }
+    }
+
+    public static func revert(_ database: Database) throws {
+        try database.delete(self)
+    }
 }

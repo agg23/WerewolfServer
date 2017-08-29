@@ -35,3 +35,16 @@ final class UsersActions: Model {
         return row
     }
 }
+
+extension UsersActions: Preparation {
+    public static func prepare(_ database: Database) throws {
+        try database.create(self) { action in
+            action.id()
+            action.int("userId")
+        }
+    }
+
+    public static func revert(_ database: Database) throws {
+        try database.delete(self)
+    }
+}

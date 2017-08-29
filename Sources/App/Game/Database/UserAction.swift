@@ -41,3 +41,17 @@ final class UserAction: Model {
         return row
     }
 }
+
+extension UserAction: Preparation {
+    public static func prepare(_ database: Database) throws {
+        try database.create(self) { action in
+            action.id()
+            action.string("type")
+            action.string("rotation")
+        }
+    }
+
+    public static func revert(_ database: Database) throws {
+        try database.delete(self)
+    }
+}
