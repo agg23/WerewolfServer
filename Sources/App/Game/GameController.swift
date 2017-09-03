@@ -288,7 +288,7 @@ class GameController {
         }
 
         guard !character.selectionComplete else {
-            Logger.warning("Received action for user \(user.id) when selection complete")
+            Logger.warning("Received action for user \(user.identifier) when selection complete")
             return
         }
 

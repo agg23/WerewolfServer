@@ -20,7 +20,7 @@ extension WebSocket {
             let bytes = try json.makeBytes()
             let string = bytes.makeString()
             if let user = socketData.user {
-                Logger.info("Sending to user \(user.id): \(string)")
+                Logger.info("Sending to user \(user.identifier): \(string)")
             } else {
                 Logger.info("Sending to unauthenticated user: \(string)")
             }

@@ -34,7 +34,7 @@ class SocketController {
                 return
             }
 
-            Logger.info("Socket closed for user \(user.id)")
+            Logger.info("Socket closed for user \(user.identifier)")
             // Disconnect user
             do {
                 try self.disconnectUser(user)
