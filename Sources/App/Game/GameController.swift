@@ -14,6 +14,7 @@ class GameController {
 
     static let instance = GameController()
     let userController = UserController.instance
+    let databaseController = DatabaseController()
 
     let jsonFactory = JSONFactory()
 
@@ -167,6 +168,8 @@ class GameController {
             }
 
             Logger.info("Game \(game.id) entering lobby")
+
+            databaseController.saveCompletedGame(game)
 
             sendFinalGameResults(game)
 

@@ -9,8 +9,8 @@
 import Foundation
 import FluentProvider
 
-final class UsersActions: Model {
-    let storage = Storage()
+public final class UsersActions: Model {
+    public let storage = Storage()
 
     let user: User
 

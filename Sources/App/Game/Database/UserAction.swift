@@ -9,8 +9,8 @@
 import Foundation
 import FluentProvider
 
-final class UserAction: Model {
-    let storage = Storage()
+public final class UserAction: Model {
+    public let storage = Storage()
 
     let type: Action.SelectionType
 
@@ -55,6 +55,7 @@ extension UserAction: Preparation {
             action.id()
             action.string("type")
             action.string("rotation")
+            action.parent(UsersActions.self)
         }
     }
 

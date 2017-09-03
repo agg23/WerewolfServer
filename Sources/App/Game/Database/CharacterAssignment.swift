@@ -9,8 +9,8 @@
 import Foundation
 import FluentProvider
 
-final class CharacterAssignment: Model {
-    let storage = Storage()
+public final class CharacterAssignment: Model {
+    public let storage = Storage()
 
     private let gameAssignmentsId: Int?
 
@@ -37,14 +37,14 @@ final class CharacterAssignment: Model {
         self.user = user
         self.character = character
 
-        self.gameAssignmentsId = try row.get("gameassignment_id")
+        self.gameAssignmentsId = try row.get("game_assignments_id")
     }
 
     public func makeRow() throws -> Row {
         var row = Row()
         try row.set("userId", user.identifier)
         try row.set("characterType", character.name)
-        try row.set("gameAssignments_id", gameAssignmentsId)
+        try row.set("game_assignments_id", gameAssignmentsId)
 
         return row
     }

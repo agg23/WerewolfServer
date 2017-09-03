@@ -26,18 +26,17 @@ class DatabaseController {
             let savedGame = SavedGame(start: start, end: Date(), winningTeam: nil, charactersInPlay: game.charactersInPlay.map({ return $0.name }), startingAssignments: startingAssignments, endingAssignments: endingAssignments)
             try savedGame.save()
         } catch {
-            Logger.error("Could not save game \(game.id)")
+            Logger.error("Could not save game \(game.id) with error \(error)")
         }
     }
 
     func makeGameAssignments(assignments: [User: GameCharacter]) throws -> GameAssignments {
         let gameAssignment = GameAssignments()
+        try gameAssignment.save()
         for (user, character) in assignments {
             let characterAssignment = CharacterAssignment(user: user, character: type(of: character), parent: gameAssignment)
             try characterAssignment.save()
         }
-
-        try gameAssignment.save()
 
         return gameAssignment
     }

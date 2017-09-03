@@ -9,8 +9,8 @@
 import Foundation
 import FluentProvider
 
-final class SavedGame: Model {
-    let storage = Storage()
+public final class SavedGame: Model {
+    public let storage = Storage()
 
     let start: Date
     let end: Date
