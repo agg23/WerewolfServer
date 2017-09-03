@@ -13,7 +13,7 @@ public final class User: Model, Hashable {
     public let storage = Storage()
 
     var identifier: Int {
-        return id?.int ?? 0
+        return id?.int ?? -1
     }
 
     let username: String
@@ -30,22 +30,20 @@ public final class User: Model, Hashable {
 
     weak var game: Game?
 
-    init(id: Int, isHuman: Bool) {
-        // TODO: Finish
-        self.username = ""
-        self.passwordHash = ""
-
-        self.isHuman = isHuman
-
-        self.nickname = isHuman ? "User \(id)" : "Nonhuman \(id)"
-    }
-
     init(username: String, passwordHash: String, nickname: String?) {
         self.username = username
         self.passwordHash = passwordHash
         self.nickname = nickname
 
         self.isHuman = true
+    }
+
+    init(nonHumanNumber: Int) {
+        self.username = "Nonhuman \(nonHumanNumber)"
+        self.passwordHash = ""
+        self.nickname = "Center card \(nonHumanNumber)"
+
+        self.isHuman = false
     }
 
     // MARK: - Model
@@ -56,7 +54,7 @@ public final class User: Model, Hashable {
 
         self.nickname = try row.get("nickname")
 
-        self.isHuman = true
+        self.isHuman = try row.get("isHuman")
     }
 
     public func makeRow() throws -> Row {
@@ -66,6 +64,8 @@ public final class User: Model, Hashable {
         try row.set("password", passwordHash)
 
         try row.set("nickname", nickname)
+
+        try row.set("isHuman", isHuman)
 
         return row
     }
@@ -101,6 +101,7 @@ extension User: Preparation {
             users.string("username")
             users.string("password")
             users.string("nickname", optional: true)
+            users.bool("isHuman")
         }
     }
 

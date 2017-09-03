@@ -14,11 +14,6 @@ class UserController {
 
     private(set) var activeUsers: Set<User> = []
     private(set) var userSockets: [User: WebSocket] = [:]
-    var lowestAvailableId: Int = 0
-
-    func createUser(isHuman: Bool = true) -> User {
-        return User(id: nextAvailableId(), isHuman: isHuman)
-    }
 
     func registerUser(_ user: User, with socket: WebSocket) {
         activeUsers.insert(user)
@@ -26,11 +21,5 @@ class UserController {
         userSockets[user] = socket
 
         Logger.info("Registered user \(user.identifier)")
-    }
-
-    func nextAvailableId() -> Int {
-        let id = lowestAvailableId
-        lowestAvailableId += 1
-        return id
     }
 }

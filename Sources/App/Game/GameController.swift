@@ -21,6 +21,42 @@ class GameController {
     private(set) var games: Set<Game> = []
     private var lowestAvailableId: Int = 0
 
+    private var nonHumanUsers: [User] = []
+
+    init() {
+        // If first 10 users are not nonhuman, add them
+        for i in 1..<11 {
+            var user: User? = nil
+            do {
+                user = try User.find(i)
+            } catch {
+                fatalError("User database error \(error)")
+            }
+
+            guard let foundUser = user else {
+                // User does not exist, create it
+                let newUser = User(nonHumanNumber: i)
+                do {
+                    try newUser.save()
+                } catch {
+                    // Cannot save new user, fail
+                    fatalError("Cannot create non human user")
+                }
+
+                nonHumanUsers.append(newUser)
+
+                continue
+            }
+
+            guard !foundUser.isHuman else {
+                // Cannot be human. Must fail
+                fatalError("Human user already exists with non human id")
+            }
+
+            nonHumanUsers.append(foundUser)
+        }
+    }
+
     func createGame() -> Game {
         return Game(id: nextAvailableId())
     }
@@ -78,13 +114,18 @@ class GameController {
                 return false
             }
 
+            guard game.nonHumanCount <= nonHumanUsers.count else {
+                Logger.warning("Attempting to start game with more non human users than are available")
+                return false
+            }
+
             Logger.info("Game \(game.id) entering night")
 
             game.state = .night
 
             // Create non-player users
-            for _ in 0 ..< game.nonHumanCount {
-                game.registerUser(userController.createUser(isHuman: false))
+            for i in 0 ..< game.nonHumanCount {
+                game.registerUser(nonHumanUsers[i])
             }
 
             _ = game.users.map({ $0.value.seenAssignments = [:] })
