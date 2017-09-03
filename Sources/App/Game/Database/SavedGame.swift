@@ -12,15 +12,15 @@ import FluentProvider
 public final class SavedGame: Model {
     public let storage = Storage()
 
-    let start: Date
-    let end: Date
+    var start: Date?
+    var end: Date?
 
-    let winningTeam: String?
+    var winningTeam: String?
 
-    let charactersInPlay: [String]
+    var charactersInPlay: [String] = []
 
-    let startingAssignments: GameAssignments
-    let endingAssignments: GameAssignments
+    var startingAssignments: GameAssignments?
+    var endingAssignments: GameAssignments?
 
     let gameHost: User
 
@@ -30,6 +30,10 @@ public final class SavedGame: Model {
 
     var actions: Children<SavedGame, UserActionCollection> {
         return children()
+    }
+
+    init(gameHost: User) {
+        self.gameHost = gameHost
     }
 
     init(start: Date, end: Date, gameHost: User, winningTeam: String?, charactersInPlay: [String], startingAssignments: GameAssignments, endingAssignments: GameAssignments) {
@@ -85,8 +89,8 @@ public final class SavedGame: Model {
 
         try row.set("charactersInPlay", charactersInPlay.joined(separator: ","))
 
-        try row.set("startingAssignmentsId", startingAssignments.id)
-        try row.set("endingAssignmentsId", endingAssignments.id)
+        try row.set("startingAssignmentsId", startingAssignments?.id)
+        try row.set("endingAssignmentsId", endingAssignments?.id)
 
         return row
     }
@@ -96,13 +100,13 @@ extension SavedGame: Preparation {
     public static func prepare(_ database: Database) throws {
         try database.create(self) { games in
             games.id()
-            games.date("startDate")
-            games.date("endDate")
+            games.date("startDate", optional: true)
+            games.date("endDate", optional: true)
             games.foreignId(for: User.self, foreignIdKey: "gameHostId")
             games.string("winningTeam", optional: true)
             games.string("charactersInPlay")
-            games.string("startingAssignmentsId")
-            games.string("endingAssignmentsId")
+            games.foreignId(for: GameAssignments.self, optional: true, foreignIdKey: "startingAssignmentsId")
+            games.foreignId(for: GameAssignments.self, optional: true, foreignIdKey: "endingAssignmentsId")
         }
     }
 

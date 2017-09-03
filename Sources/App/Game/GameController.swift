@@ -19,7 +19,6 @@ class GameController {
     let jsonFactory = JSONFactory()
 
     private(set) var games: Set<Game> = []
-    private var lowestAvailableId: Int = 0
 
     private var nonHumanUsers: [User] = []
 
@@ -57,8 +56,14 @@ class GameController {
         }
     }
 
-    func createGame(host: User) -> Game {
-        return Game(id: nextAvailableId(), host: host)
+    func createGame(host: User) throws -> Game {
+        let id = databaseController.createNewGame(host: host)
+
+        guard let gameId = id else {
+            throw GameError.cannotCreateGame
+        }
+
+        return Game(id: gameId, host: host)
     }
 
     func registerGame(_ game: Game) {
@@ -93,7 +98,7 @@ class GameController {
 
     func leaveGame(user: User) throws {
         guard let game = user.game else {
-            throw GameController.GameError.userNotInGame
+            throw GameError.userNotInGame
         }
 
         user.game = nil
@@ -363,12 +368,6 @@ class GameController {
     }
 
     // MARK: - Utility
-
-    func nextAvailableId() -> Int {
-        let id = lowestAvailableId
-        lowestAvailableId += 1
-        return id
-    }
 
     func character(for name: String) -> GameCharacter.Type? {
         return availableCharacters.first(where: { return $0.name == name })

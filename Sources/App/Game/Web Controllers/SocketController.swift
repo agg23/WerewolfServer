@@ -199,7 +199,7 @@ extension SocketController {
             }
         }
 
-        let game = gameController.createGame(host: user)
+        let game = try gameController.createGame(host: user)
 
         game.name = name
         game.password = json["password"]?.string
