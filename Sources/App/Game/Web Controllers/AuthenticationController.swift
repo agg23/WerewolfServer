@@ -47,12 +47,12 @@ class AuthenticationController {
         var userRow: User? = nil
 
         do {
-            userRow = try User.makeQuery().filter("username", .equals, username).first()
+            userRow = try User.makeQuery().filter("username", .equals, username.lowercased()).first()
         } catch {
             // Do nothing
         }
 
-        guard let user = userRow else {
+        guard let user = userRow, user.isHuman else {
             throw AuthenticationError.invalidUser
         }
 

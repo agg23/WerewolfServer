@@ -31,7 +31,7 @@ public final class User: Model, Hashable {
     weak var game: Game?
 
     init(username: String, passwordHash: String, nickname: String?) {
-        self.username = username
+        self.username = username.lowercased()
         self.passwordHash = passwordHash
         self.nickname = nickname
 
@@ -39,7 +39,7 @@ public final class User: Model, Hashable {
     }
 
     init(nonHumanNumber: Int) {
-        self.username = "Nonhuman \(nonHumanNumber)"
+        self.username = "nonhuman \(nonHumanNumber)"
         self.passwordHash = ""
         self.nickname = "Center card \(nonHumanNumber)"
 
