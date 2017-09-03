@@ -220,6 +220,17 @@ class GameController {
             sendFinalGameResults(game)
 
             game.state = .lobby
+
+            // Update game id
+
+            let id = databaseController.createNewGame(host: game.host)
+
+            guard let gameId = id else {
+                Logger.error("Cannot transfer game to new id")
+                return true
+            }
+
+            game.id = gameId
         }
 
         return game.state != startingGameState

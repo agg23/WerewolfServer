@@ -17,7 +17,7 @@ class Game: Hashable {
         case lobby = "lobby"
     }
 
-    let id: Int
+    var id: Int
     var host: User
 
     var name: String?
