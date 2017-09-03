@@ -18,7 +18,7 @@ extension Config {
     /// Add all models that should have their
     /// schemas prepared before the app boots
     private func setupPreparations() throws {
-        let newPreparations: [Preparation.Type] = [User.self, SavedGame.self, CharacterAssignment.self, GameAssignments.self, UserAction.self, UsersActions.self, Pivot<SavedGame, UsersActions>.self, Pivot<UserAction, User>.self]
+        let newPreparations: [Preparation.Type] = [User.self, SavedGame.self, CharacterAssignment.self, GameAssignments.self, UserAction.self, UserActionCollection.self, Pivot<UserAction, User>.self]
 
         preparations.append(contentsOf: newPreparations)
     }

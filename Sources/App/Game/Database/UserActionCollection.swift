@@ -1,5 +1,5 @@
 //
-//  UsersActions.swift
+//  UserActionCollection.swift
 //  WerewolfServer
 //
 //  Created by Adam Gastineau on 8/29/17.
@@ -9,17 +9,21 @@
 import Foundation
 import FluentProvider
 
-public final class UsersActions: Model {
+public final class UserActionCollection: Model {
     public let storage = Storage()
+
+    private let savedGameId: Int?
 
     let user: User
 
-    var actions: Children<UsersActions, UserAction> {
+    var actions: Children<UserActionCollection, UserAction> {
         return children()
     }
 
-    init(user: User) {
+    init(user: User, savedGame: SavedGame) {
         self.user = user
+
+        self.savedGameId = savedGame.id?.int
     }
 
     // MARK: - Model
@@ -32,21 +36,26 @@ public final class UsersActions: Model {
         }
 
         self.user = user
+
+        self.savedGameId = try row.get("saved_game_id")
     }
 
     public func makeRow() throws -> Row {
         var row = Row()
         try row.set("userId", user.identifier)
 
+        try row.set("saved_game_id", savedGameId)
+
         return row
     }
 }
 
-extension UsersActions: Preparation {
+extension UserActionCollection: Preparation {
     public static func prepare(_ database: Database) throws {
         try database.create(self) { action in
             action.id()
             action.int("userId")
+            action.parent(SavedGame.self)
         }
     }
 

@@ -26,8 +26,8 @@ public final class SavedGame: Model {
         return siblings()
     }
 
-    var actions: Siblings<SavedGame, UsersActions, Pivot<SavedGame, UsersActions>> {
-        return siblings()
+    var actions: Children<SavedGame, UserActionCollection> {
+        return children()
     }
 
     init(start: Date, end: Date, winningTeam: String?, charactersInPlay: [String], startingAssignments: GameAssignments, endingAssignments: GameAssignments) {

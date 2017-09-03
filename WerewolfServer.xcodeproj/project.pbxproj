@@ -15,7 +15,7 @@
 		66769CD21F54AE7600D1C1DE /* DatabaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66769CD11F54AE7600D1C1DE /* DatabaseController.swift */; };
 		66769CD41F54B15400D1C1DE /* GameAssignments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66769CD31F54B15400D1C1DE /* GameAssignments.swift */; };
 		66769CD61F55935C00D1C1DE /* UserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66769CD51F55935C00D1C1DE /* UserAction.swift */; };
-		66769CD81F55964800D1C1DE /* UsersActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66769CD71F55964800D1C1DE /* UsersActions.swift */; };
+		66769CD81F55964800D1C1DE /* UserActionCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66769CD71F55964800D1C1DE /* UserActionCollection.swift */; };
 		OBJ_1000 /* FoundationStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_700 /* FoundationStream.swift */; };
 		OBJ_1001 /* ReadableStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_701 /* ReadableStream.swift */; };
 		OBJ_1002 /* Stream.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_702 /* Stream.swift */; };
@@ -4738,7 +4738,7 @@
 		66769CD11F54AE7600D1C1DE /* DatabaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DatabaseController.swift; path = Sources/App/Game/Database/DatabaseController.swift; sourceTree = SOURCE_ROOT; };
 		66769CD31F54B15400D1C1DE /* GameAssignments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameAssignments.swift; path = Sources/App/Game/Database/GameAssignments.swift; sourceTree = SOURCE_ROOT; };
 		66769CD51F55935C00D1C1DE /* UserAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserAction.swift; path = Sources/App/Game/Database/UserAction.swift; sourceTree = SOURCE_ROOT; };
-		66769CD71F55964800D1C1DE /* UsersActions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsersActions.swift; path = Sources/App/Game/Database/UsersActions.swift; sourceTree = SOURCE_ROOT; };
+		66769CD71F55964800D1C1DE /* UserActionCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserActionCollection.swift; path = Sources/App/Game/Database/UserActionCollection.swift; sourceTree = SOURCE_ROOT; };
 		OBJ_10 /* Droplet+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Droplet+Setup.swift"; sourceTree = "<group>"; };
 		OBJ_100 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		OBJ_101 /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
@@ -6175,7 +6175,7 @@
 				66769CCF1F54AD0600D1C1DE /* CharacterAssignment.swift */,
 				66769CD31F54B15400D1C1DE /* GameAssignments.swift */,
 				66769CD51F55935C00D1C1DE /* UserAction.swift */,
-				66769CD71F55964800D1C1DE /* UsersActions.swift */,
+				66769CD71F55964800D1C1DE /* UserActionCollection.swift */,
 			);
 			name = Database;
 			path = Models;
@@ -10235,7 +10235,7 @@
 				66267C641F4A2FA10013C9B5 /* Logger.swift in Sources */,
 				66769CD61F55935C00D1C1DE /* UserAction.swift in Sources */,
 				OBJ_2441 /* Seer.swift in Sources */,
-				66769CD81F55964800D1C1DE /* UsersActions.swift in Sources */,
+				66769CD81F55964800D1C1DE /* UserActionCollection.swift in Sources */,
 				OBJ_2442 /* Troublemaker.swift in Sources */,
 				66267C661F4A49D10013C9B5 /* GeneralExtensions.swift in Sources */,
 				OBJ_2443 /* Werewolf.swift in Sources */,
