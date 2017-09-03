@@ -18,6 +18,8 @@ class Game: Hashable {
     }
 
     let id: Int
+    var host: User
+
     var name: String?
     var password: String?
 
@@ -39,8 +41,10 @@ class Game: Hashable {
 
     private var lowestAvailableId: Int = 0
 
-    init(id: Int) {
+    init(id: Int, host: User) {
         self.id = id
+
+        self.host = host
 
         self.state = .lobby
     }

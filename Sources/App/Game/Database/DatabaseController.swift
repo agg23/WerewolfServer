@@ -25,7 +25,7 @@ class DatabaseController {
             let startingAssignments = try makeGameAssignments(assignments: game.startingAssignments)
             let endingAssignments = try makeGameAssignments(assignments: game.assignments)
 
-            let savedGame = SavedGame(start: start, end: Date(), winningTeam: nil, charactersInPlay: game.charactersInPlay.map({ return $0.name }), startingAssignments: startingAssignments, endingAssignments: endingAssignments)
+            let savedGame = SavedGame(start: start, end: Date(), gameHost: game.host, winningTeam: nil, charactersInPlay: game.charactersInPlay.map({ return $0.name }), startingAssignments: startingAssignments, endingAssignments: endingAssignments)
             try savedGame.save()
 
             for user in game.actions.keys {

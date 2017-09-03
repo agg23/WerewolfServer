@@ -57,8 +57,8 @@ class GameController {
         }
     }
 
-    func createGame() -> Game {
-        return Game(id: nextAvailableId())
+    func createGame(host: User) -> Game {
+        return Game(id: nextAvailableId(), host: host)
     }
 
     func registerGame(_ game: Game) {

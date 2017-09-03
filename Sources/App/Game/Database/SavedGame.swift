@@ -22,6 +22,8 @@ public final class SavedGame: Model {
     let startingAssignments: GameAssignments
     let endingAssignments: GameAssignments
 
+    let gameHost: User
+
     var users: Siblings<SavedGame, User, Pivot<SavedGame, User>> {
         return siblings()
     }
@@ -30,9 +32,11 @@ public final class SavedGame: Model {
         return children()
     }
 
-    init(start: Date, end: Date, winningTeam: String?, charactersInPlay: [String], startingAssignments: GameAssignments, endingAssignments: GameAssignments) {
+    init(start: Date, end: Date, gameHost: User, winningTeam: String?, charactersInPlay: [String], startingAssignments: GameAssignments, endingAssignments: GameAssignments) {
         self.start = start
         self.end = end
+
+        self.gameHost = gameHost
 
         self.winningTeam = winningTeam
 
@@ -56,10 +60,15 @@ public final class SavedGame: Model {
         let startingAssignmentsId: Identifier = try row.get("startingAssignmentsId")
         let endingAssignmentsId: Identifier = try row.get("endingAssignmentsId")
 
+        let gameHostId: Identifier = try row.get("gameHostId")
+
         guard let startingAssignments = try GameAssignments.find(startingAssignmentsId),
-            let endingAssignments = try GameAssignments.find(endingAssignmentsId) else {
+            let endingAssignments = try GameAssignments.find(endingAssignmentsId),
+            let gameHost = try User.find(gameHostId) else {
                 throw DatabaseController.DatabaseError.failedCreation
         }
+
+        self.gameHost = gameHost
 
         self.startingAssignments = startingAssignments
         self.endingAssignments = endingAssignments
@@ -69,6 +78,8 @@ public final class SavedGame: Model {
         var row = Row()
         try row.set("startDate", start)
         try row.set("endDate", end)
+
+        try row.set("gameHostId", gameHost.id)
 
         try row.set("winningTeam", winningTeam)
 
@@ -87,6 +98,7 @@ extension SavedGame: Preparation {
             games.id()
             games.date("startDate")
             games.date("endDate")
+            games.foreignId(for: User.self, foreignIdKey: "gameHostId")
             games.string("winningTeam", optional: true)
             games.string("charactersInPlay")
             games.string("startingAssignmentsId")
