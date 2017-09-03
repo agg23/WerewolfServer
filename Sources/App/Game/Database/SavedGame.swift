@@ -72,9 +72,7 @@ public final class SavedGame: Model {
 
         try row.set("winningTeam", winningTeam)
 
-        try row.set("charactersInPlay", charactersInPlay.reduce("", { (result, string) -> String in
-            return "\(result),\(string)"
-        }))
+        try row.set("charactersInPlay", charactersInPlay.joined(separator: ","))
 
         try row.set("startingAssignmentsId", startingAssignments.id)
         try row.set("endingAssignmentsId", endingAssignments.id)
