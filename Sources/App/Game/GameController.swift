@@ -292,22 +292,28 @@ class GameController {
             return
         }
 
+        var userSelections: [User] = []
+
         switch type {
         case .single:
-            guard let selections = selections, selections.count > 0 else {
+            guard let fullSelections = selections, fullSelections.count > 0 else {
                 throw SocketController.ParseError.malformedData("selections")
             }
+
+            userSelections = Array(fullSelections[0..<1])
         case .double:
-            guard let selections = selections, selections.count > 1 else {
+            guard let fullSelections = selections, fullSelections.count > 1 else {
                 throw SocketController.ParseError.malformedData("selections")
             }
+
+            userSelections = Array(fullSelections[0..<2])
         case .rotate:
             guard rotation != nil else {
                 throw SocketController.ParseError.malformedData("rotation")
             }
         }
 
-        let action = Action(type: type, selections: selections ?? [], rotation: rotation)
+        let action = Action(type: type, selections: userSelections, rotation: rotation)
 
         game.addAction(action, for: user)
 
