@@ -18,6 +18,7 @@ class WebController {
 
     func registerRoutes(to droplet: Droplet) {
         droplet.get("availableCharacters", handler: gameInfoController.availableCharacters)
+        droplet.get("availableGames", handler: gameInfoController.availableGames)
         droplet.get("log", handler: gameInfoController.viewLog)
 
         socketController.version = droplet.config["server", "version"]?.string ?? "0.1"

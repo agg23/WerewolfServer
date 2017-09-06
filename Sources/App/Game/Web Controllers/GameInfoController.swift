@@ -44,4 +44,19 @@ class GameInfoController {
 //        return Response(status: Status.init(statusCode: 200), body: finalString)
         return string
     }
+
+    func availableGames(_ request: Request) -> ResponseRepresentable {
+        let games = GameController.instance.games.sorted { (lhs, rhs) -> Bool in
+            guard let leftStart = lhs.startDate,
+                let rightStart = rhs.startDate else {
+                return lhs.id < rhs.id
+            }
+
+            return leftStart < rightStart
+        }
+
+        let factory = JSONFactory()
+
+        return JSON(games.map({ factory.makeGame($0) }))
+    }
 }

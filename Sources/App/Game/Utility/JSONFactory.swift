@@ -84,4 +84,32 @@ class JSONFactory {
 
         return json
     }
+
+    func makeGame(_ game: Game) -> JSON {
+        var json = JSON()
+
+        json["id"] = JSON(game.id)
+
+        if let name = game.name {
+            json["name"] = JSON(name)
+        } else {
+            json["name"] = JSON.null
+        }
+
+        if let nickname = game.host.nickname {
+            json["hostNickname"] = JSON(nickname)
+        } else {
+            json["hostNickname"] = JSON.null
+        }
+
+        json["userCount"] = JSON(game.users.count)
+
+        json["passwordProtected"] = JSON(game.password != nil)
+
+        json["state"] = JSON(game.state.rawValue)
+
+        json["charactersInPlay"] = JSON(game.charactersInPlay.map({ $0.name }).joined(separator: ","))
+
+        return json
+    }
 }
