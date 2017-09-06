@@ -97,6 +97,9 @@ class Game: Hashable {
         let temp = assignments[firstUser]
         let temp2 = assignments[secondUser]
 
+        temp?.transferredCharacterType = nil
+        temp2?.transferredCharacterType = nil
+
         assignments[firstUser] = temp2
         assignments[secondUser] = temp
     }

@@ -55,9 +55,13 @@ class Copycat: GameCharacter {
                 Logger.error("Character assignment does not exist for user")
                 return .none
             }
-            user.seenAssignments[selectedUser] = type(of: character)
 
-            self.inheritedCharacter = character
+            let characterType = type(of: character)
+
+            user.seenAssignments[selectedUser] = characterType
+
+            transferredCharacterType = characterType
+            inheritedCharacter = character
 
             updateCharacterProperties()
         }
@@ -71,13 +75,13 @@ class Copycat: GameCharacter {
             return
         }
 
-        self.turnOrder = character.turnOrder
-        self.turnOrder = character.turnOrder
-        self.selectableType = character.selectableType
-        self.selectionCount = character.selectionCount
-        self.canSelectSelf = character.canSelectSelf
-        self.defaultVisible = character.defaultVisible
-        self.defaultVisibleViewableType = character.defaultVisibleViewableType
-        self.selectionComplete = character.selectionComplete
+        turnOrder = character.turnOrder
+        turnOrder = character.turnOrder
+        selectableType = character.selectableType
+        selectionCount = character.selectionCount
+        canSelectSelf = character.canSelectSelf
+        defaultVisible = character.defaultVisible
+        defaultVisibleViewableType = character.defaultVisibleViewableType
+        selectionComplete = character.selectionComplete
     }
 }

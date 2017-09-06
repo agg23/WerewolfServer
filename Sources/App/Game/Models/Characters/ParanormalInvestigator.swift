@@ -53,9 +53,10 @@ class ParanormalInvestigator: GameCharacter {
             return
         }
 
-        if shouldBecome(type(of: character)) {
-            // TODO: Finish
-//            self.transferedCharacterName = character.name
+        let characterType = type(of: character)
+
+        if shouldBecome(characterType) {
+            transferredCharacterType = characterType
         }
     }
 
@@ -67,12 +68,12 @@ class ParanormalInvestigator: GameCharacter {
 
         let selectedUser = action.selections[0]
 
-        if self.firstCharacterSelect {
-            self.selectionComplete = true
+        if firstCharacterSelect {
+            selectionComplete = true
         }
 
         if let character = game.assignments[selectedUser] {
-            self.firstCharacterSelect = true
+            firstCharacterSelect = true
 
             let type = type(of: character)
             user.seenAssignments[selectedUser] = type
@@ -81,8 +82,7 @@ class ParanormalInvestigator: GameCharacter {
                 selectionCount = 0
                 selectionComplete = true
 
-                // TODO: Add
-//                transferedCharacterName = character.name
+                transferredCharacterType = type
 
                 return .full
             }

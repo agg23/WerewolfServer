@@ -50,6 +50,8 @@ class GameCharacter: Equatable {
 
     var selectionComplete: Bool = true
 
+    var transferredCharacterType: GameCharacter.Type?
+
     required init(id: Int) {
         self.id = id
     }
