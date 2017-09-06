@@ -80,6 +80,21 @@ class Witch: GameCharacter {
 
             user.seenAssignments[selectedUser] = type(of: character)
         } else if !selectionComplete {
+            // Human user was just selected
+            guard action.selections.count > 0 else {
+                Logger.warning("Invalid Action for Witch")
+                return .hidden
+            }
+
+            let selectedUser = action.selections[0]
+
+            guard let character = game.assignments[selectedUser] else {
+                Logger.error("Character assignment does not exist for user")
+                return .none
+            }
+
+            transferredCharacterType = type(of: character)
+
             selectionComplete = true
             return .hidden
         }
