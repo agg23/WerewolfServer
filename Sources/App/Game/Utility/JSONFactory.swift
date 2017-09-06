@@ -45,8 +45,11 @@ class JSONFactory {
     func makeCharacter(_ character: GameCharacter) -> JSON {
         var json = JSON()
 
-        // Will use transferredCharacterType if it exists
-        json["name"] = JSON((character.transferredCharacterType ?? type(of: character)).name)
+        json["name"] = JSON(type(of: character).name)
+
+        if let transferredCharacterType = character.transferredCharacterType {
+            json["lastKnownName"] = JSON(transferredCharacterType.name)
+        }
 
         var allowedActions = JSON()
 
