@@ -55,6 +55,7 @@ class JSONFactory {
 
         if character.selectableType != .none {
             allowedActions["selectionCount"] = JSON(character.selectionComplete ? 0 : character.selectionCount)
+            allowedActions["canSelectSelf"] = JSON(character.canSelectSelf)
         }
 
         allowedActions["selectionType"] = JSON(character.selectableType.rawValue)
