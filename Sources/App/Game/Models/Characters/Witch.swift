@@ -79,6 +79,8 @@ class Witch: GameCharacter {
             }
 
             user.seenAssignments[selectedUser] = type(of: character)
+
+            canSelectSelf = true
         } else if !selectionComplete {
             // Human user was just selected
             guard action.selections.count > 0 else {
@@ -96,6 +98,7 @@ class Witch: GameCharacter {
             transferredCharacterType = type(of: character)
 
             selectionComplete = true
+            canSelectSelf = false
             return .hidden
         }
         
