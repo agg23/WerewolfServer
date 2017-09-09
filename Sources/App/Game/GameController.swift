@@ -256,6 +256,7 @@ class GameController {
         let userData = game.users.map { return jsonFactory.makeUser($0.value, using: game) }
         let charactersInPlay = game.charactersInPlay.map { return jsonFactory.makeCharacterType($0) }
 
+        json["id"] = JSON(game.id)
         json["players"] = JSON(userData)
         json["inPlay"] = JSON(charactersInPlay)
         json["state"] = JSON(game.state.rawValue)
