@@ -213,6 +213,11 @@ class GameController {
                 return false
             }
 
+            // Mark all users as unready, for starting the next game
+            for user in game.users.values {
+                game.unreadyUser(user)
+            }
+
             Logger.info("Game \(game.id) entering lobby")
 
             databaseController.saveCompletedGame(game)
