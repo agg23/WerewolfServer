@@ -17,6 +17,10 @@ class WebController {
     let gameInfoController = GameInfoController()
 
     func registerRoutes(to droplet: Droplet) {
+        droplet.get("/") { request in
+            return try droplet.view.make("index.html")
+        }
+
         droplet.get("availableCharacters", handler: gameInfoController.availableCharacters)
         droplet.get("availableGames", handler: gameInfoController.availableGames)
         droplet.get("log", handler: gameInfoController.viewLog)
