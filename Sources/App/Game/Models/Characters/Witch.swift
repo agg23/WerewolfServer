@@ -14,6 +14,7 @@ class Witch: GameCharacter {
     }
 
     private var humanPlayerSelected: Bool
+    private var selectedCharacterType: GameCharacter.Type?
 
     required init(id: Int) {
         self.humanPlayerSelected = false
@@ -78,7 +79,11 @@ class Witch: GameCharacter {
                 return .none
             }
 
-            user.seenAssignments[selectedUser] = type(of: character)
+            let type = type(of: character)
+
+            user.seenAssignments[selectedUser] = type
+
+            selectedCharacterType = type
 
             canSelectSelf = true
         } else if !selectionComplete {
@@ -90,12 +95,10 @@ class Witch: GameCharacter {
 
             let selectedUser = action.selections[0]
 
-            guard let character = game.assignments[selectedUser] else {
-                Logger.error("Character assignment does not exist for user")
-                return .none
+            if selectedUser == user,
+                let selectedCharacterType = selectedCharacterType {
+                transferredCharacterType = selectedCharacterType
             }
-
-            transferredCharacterType = type(of: character)
 
             selectionComplete = true
             canSelectSelf = false

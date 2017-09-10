@@ -341,12 +341,6 @@ class GameController {
 
         let characterNeedsUpdate = character.received(action: action, user: user, game: game)
 
-        let shouldUpdateGameStatus = checkGameStatus(game)
-
-        if shouldUpdateGameStatus {
-            updateGameStatus(game)
-        }
-
         if characterNeedsUpdate == .full {
             characterUpdate(for: user, in: game)
         } else if characterNeedsUpdate == .hidden {
@@ -361,6 +355,12 @@ class GameController {
                 assignment.key.seenAssignments[user] = characterType
                 hiddenCharacterUpdate(for: assignment.key, in: game)
             }
+        }
+
+        let shouldUpdateGameStatus = checkGameStatus(game)
+
+        if shouldUpdateGameStatus {
+            updateGameStatus(game)
         }
     }
 
