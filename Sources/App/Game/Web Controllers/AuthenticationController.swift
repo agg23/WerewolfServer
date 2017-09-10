@@ -18,8 +18,9 @@ class AuthenticationController {
         case authFailed
         case registrationFailed
         case invalidUser
+        case userExists
 
-        static let allValues: [AuthenticationError] = [.authRequired, .authFailed, .registrationFailed, .invalidUser]
+        static let allValues: [AuthenticationError] = [.authRequired, .authFailed, .registrationFailed, .invalidUser, .userExists]
 
         static func message(for error: AuthenticationError) -> String {
             switch error {
@@ -31,6 +32,8 @@ class AuthenticationController {
                 return "Registration failed"
             case .invalidUser:
                 return "User does not exist"
+            case .userExists:
+                return "User already exists"
             }
         }
     }
@@ -78,6 +81,18 @@ class AuthenticationController {
 
         guard let password = json["password"]?.string else {
             throw SocketController.ParseError.missingData("password")
+        }
+
+        var existingUser: User? = nil
+
+        do {
+            existingUser = try User.makeQuery().filter("username", .equals, username.lowercased()).first()
+        } catch {
+            // Do nothing
+        }
+
+        guard existingUser == nil else {
+            throw AuthenticationError.userExists
         }
 
         let user: User
