@@ -109,6 +109,8 @@ class SocketController {
             return try hostGame(json: json, socket: socket, user: user)
         case "joinGame":
             return try joinGame(json: json, socket: socket, user: user)
+        case "leaveGame":
+            return try leaveGame(user: user)
 
         case "ready":
             try markUserReady(socket: socket, user: user)
@@ -233,6 +235,18 @@ extension SocketController {
         let game = try gameController.game(with: id)
 
         try gameController.joinGame(game, password: password, user: user)
+
+        var data = JSON()
+        data["id"] = JSON(game.id)
+        return data
+    }
+
+    func leaveGame(user: User) throws -> JSON? {
+        guard let game = user.game else {
+            throw GameController.GameError.userNotInGame
+        }
+
+        try gameController.leaveGame(user: user)
 
         var data = JSON()
         data["id"] = JSON(game.id)
