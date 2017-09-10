@@ -203,6 +203,11 @@ extension SocketController {
 
         game.name = name
         game.password = json["password"]?.string
+
+        if game.password == "" {
+            game.password = nil
+        }
+
         game.charactersInPlay = charactersInPlay
 
         gameController.registerGame(game)
@@ -219,7 +224,11 @@ extension SocketController {
             throw ParseError.missingData("id")
         }
 
-        let password = json["password"]?.string
+        var password = json["password"]?.string
+
+        if password == "" {
+            password = nil
+        }
 
         let game = try gameController.game(with: id)
 
