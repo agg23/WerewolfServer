@@ -25,12 +25,7 @@ class ParanormalInvestigator: GameCharacter {
         self.defaultVisible = []
         self.defaultVisibleViewableType = .none
         self.selectionCount = 1
-        self.selectionComplete = true
-    }
-
-    override func beginNight(with game: Game) {
-        // For some reason necessary
-        self.selectionComplete = true
+        self.selectionComplete = false
     }
 
     // TODO: Finish

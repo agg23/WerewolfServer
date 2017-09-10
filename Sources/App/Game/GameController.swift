@@ -236,6 +236,9 @@ class GameController {
             }
 
             game.id = gameId
+            game.assignments = [:]
+            game.startingAssignments = [:]
+            game.actions = [:]
         }
 
         return game.state != startingGameState
