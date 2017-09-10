@@ -15,6 +15,7 @@ class Witch: GameCharacter {
 
     private var humanPlayerSelected: Bool
     private var selectedCharacterType: GameCharacter.Type?
+    private var selectedNonhumanUser: User?
 
     required init(id: Int) {
         self.humanPlayerSelected = false
@@ -73,6 +74,7 @@ class Witch: GameCharacter {
             }
 
             let selectedUser = action.selections[0]
+            selectedNonhumanUser = selectedUser
 
             guard let character = game.assignments[selectedUser] else {
                 Logger.error("Character assignment does not exist for user")
@@ -98,6 +100,19 @@ class Witch: GameCharacter {
             if selectedUser == user,
                 let selectedCharacterType = selectedCharacterType {
                 transferredCharacterType = selectedCharacterType
+
+                // Update seen assignment for nonhuman user
+                if let selectedNonhumanUser = selectedNonhumanUser {
+                    user.seenAssignments[selectedNonhumanUser] = type(of: self)
+                }
+            } else if let selectedCharacterType = selectedCharacterType {
+                // Add seen assignment for the user we gave the selected type to
+                user.seenAssignments[selectedUser] = selectedCharacterType
+                
+                // Update seen assignment for nonhuman user
+                if let selectedNonhumanUser = selectedNonhumanUser {
+                    user.seenAssignments[selectedNonhumanUser] = nil
+                }
             }
 
             selectionComplete = true

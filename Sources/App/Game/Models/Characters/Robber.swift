@@ -64,11 +64,9 @@ class Robber: GameCharacter {
             return .none
         }
 
-        let characterType = type(of: character)
+        user.seenAssignments[selectedUser] = type(of: self)
 
-        user.seenAssignments[selectedUser] = characterType
-
-        transferredCharacterType = characterType
+        transferredCharacterType = type(of: character)
 
         self.selectionComplete = true
         
