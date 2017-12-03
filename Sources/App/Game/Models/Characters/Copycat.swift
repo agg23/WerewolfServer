@@ -15,6 +15,15 @@ class Copycat: GameCharacter {
 
     private var inheritedCharacter: GameCharacter?
 
+	override var transferredCharacterType: GameCharacter.Type? {
+		didSet {
+			if transferredCharacterType == nil {
+				// Clear inheritedCharacter
+				inheritedCharacter = nil
+			}
+		}
+	}
+
     required init(id: Int) {
         super.init(id: id)
 
@@ -75,7 +84,6 @@ class Copycat: GameCharacter {
             return
         }
 
-        turnOrder = character.turnOrder
         turnOrder = character.turnOrder
         selectableType = character.selectableType
         selectionCount = character.selectionCount
