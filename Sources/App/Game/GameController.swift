@@ -203,7 +203,7 @@ class GameController {
                 assignment.value.beginDiscussion(with: game)
             }
 
-            let assignmentsNeedingUpdates = game.assignments.filter({ return $0.value.orderType == .last })
+            let assignmentsNeedingUpdates = game.startingAssignments.filter({ return $0.value.orderType == .last })
 
             for assignment in assignmentsNeedingUpdates {
                 characterUpdate(for: assignment.key, in: game)
